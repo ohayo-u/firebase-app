@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { db, auth } from "./firebase";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 
 export const DishList = () => {
     const [dishList, setDishList] = useState([]);
     const user = auth.currentUser;
+
+    const deleteDish = async (id) => {
+        const dishDocumentRef = doc(db, 'users', user.uid, 'dish-list', id);
+        await deleteDoc(dishDocumentRef);
+    };
 
     useEffect(() => {
         const dishListCollectionRef = collection(db, 'users',user.uid ,'dish-list');
@@ -17,9 +22,12 @@ export const DishList = () => {
         },[]);
 
     return(
-        <ul>
+        <ul className="list">
             {dishList.map((dish) => (
-                <li key={dish.id}>{dish.name}</li>
+                <li key={dish.id}>
+                    <p>{dish.name}</p> {/* onDoubleClickメソッドで、表示名を変更できるようにする */}
+                    <button onClick={() => deleteDish(dish.id)}>削除</button>
+                </li>
             ))}
         </ul>
     )

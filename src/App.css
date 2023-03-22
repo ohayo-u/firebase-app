@@ -29,6 +29,10 @@ form {
   row-gap: 30px;
 }
 
+li {
+  list-style: none;
+}
+
 input {
   width: 100%;
   box-sizing: border-box;
@@ -47,6 +51,7 @@ button {
   color: #fff;
   padding: 10px;
   font-size: 16px;
+  margin-top: 10px;
 }
 
 button:hover {
@@ -60,4 +65,17 @@ button:hover {
 
 .user-image img {
   border-radius: 50%;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.list li {
+  text-align: center;
+  border: #ddd 3px solid;
+  padding: 30px;
+  width: 150px;
+  margin: 10px;
 }

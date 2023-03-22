@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { auth } from "./firebase";
 import { 
     useNavigate,
-    Navigate
+    Navigate,
+    Link
  } from "react-router-dom";
- import { FoodRegister } from "./FoodRegister";
 import { DishList } from "./DishList";
+import { FriendFood } from "./FriendFood";
 
 export const Mypage = () => {
     const [user, setUser] = useState("");
@@ -39,9 +40,11 @@ export const Mypage = () => {
             <p>{user?.displayName}</p>
             <p>{user?.email}</p>
             <div className="user-image"><img src={user?.photoURL} /></div>
-            <FoodRegister />
+            <Link to={`/food-register/`}>料理を追加する</Link>
             <h2>作った料理</h2>
             <DishList />
+            <h2>仲良し食材</h2>
+            <FriendFood />
             <button onClick={logout}>ログアウト</button>
         </>
         )}
