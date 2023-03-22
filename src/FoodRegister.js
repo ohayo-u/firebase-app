@@ -1,4 +1,4 @@
-import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, DocumentSnapshot, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { Link, Navigate } from "react-router-dom";
 import { auth, db } from "./firebase";
 import { useState, useEffect } from "react";
@@ -6,9 +6,10 @@ import { onAuthStateChanged } from "firebase/auth";
 
 export const FoodRegister = () => {
     const [user, setUser] = useState("");
-    const [usedfood, setUsedfood] = useState([]);
+    const [usedFoodId, setUsedFoodId] = useState([]);
     const [foodlist, setFoodlist] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [usedFood, setUsedFood] = useState([]);
 
     useEffect(() => {
         onAuthStateChanged(auth, (currentUser) => {
@@ -21,9 +22,24 @@ export const FoodRegister = () => {
             setFoodlist(querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id})));
         });
         
+        
     }, []);
 
-    const handleClick = (e) => {console.log(e.currentTarget)};
+    const handleClick = (foodId) => {
+        setUsedFoodId([...usedFoodId, foodId]);
+        console.log(usedFoodId);
+        setFoodlist(
+            foodlist.filter((food) => (food.id !== foodId))
+        );
+        console.log(foodlist);
+
+        const usedFoodDocumentRef = doc(db, 'food', foodId);
+        getDoc(usedFoodDocumentRef).then((documentSnapshot) => {
+            setUsedFood([...usedFood, {...documentSnapshot.data(), id: foodId}]);
+        });
+
+        console.log(usedFood);
+    };
 
 
     const handleSubmit = async (e) => {
@@ -35,9 +51,9 @@ export const FoodRegister = () => {
             name: dishName.value
         });
 
-        // dishドキュメント内のused-food配列にusedfood配列を追加するに変更する
+        // dishドキュメント内のused-food配列にusedFoodId配列を追加するに変更する
         await updateDoc(dishDocumentRef, {
-            usedfood: arrayUnion(...usedfood)
+            usedFoodId: arrayUnion(...usedFoodId)
         });
     } ;
 
@@ -58,14 +74,16 @@ export const FoodRegister = () => {
                                     >
                                 </input>
                                 <h3>食材一覧</h3>
-                                {/* foodコレクションの表示 onclickでusedfood配列にid追加*/}
+                                {/* foodコレクションの表示 onclickでusedFoodId配列にid追加*/}
                                 <ul>
                                     {foodlist.map((food) => (
-                                        <li key={food.id} onClick={handleClick}>{food.name}</li>
+                                        <li key={food.id} onClick={() => handleClick(food.id)}>{food.name}</li>
                                     ))}
                                 </ul>
                                 <h3>使った食材</h3>
-                                {/* usedfoodの表示 */}
+                                    {usedFood.map((food) => (
+                                        <li key={food.id}>{food.name}</li>
+                                    ))}
                                 <button>登録する</button>
                             </form>
                             <Link to={`/`}>マイページ</Link>
@@ -80,5 +98,5 @@ export const FoodRegister = () => {
 
 
 // form内で食材リストをfoodコレクションから持ってきて表示させる
-// クリックするとuseStateの配列、usedfoodにfoodドキュメントのIDが追加される
-// handleSubmitが実行されたら、usedfood配列がdishドキュメントのusedfoodフィールドに追加される
+// クリックするとuseStateの配列、usedFoodIdにfoodドキュメントのIDが追加される
+// handleSubmitが実行されたら、usedFoodId配列がdishドキュメントのusedFoodIdフィールドに追加される
