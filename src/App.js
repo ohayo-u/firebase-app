@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Register } from './Register';
 import { Login } from './Login';
 import { Mypage } from './Mypage';
-import { FoodRegister } from './FoodRegister';
+import { DishRegister } from './DishRegister';
 
 export const App = () => {
   return (
@@ -12,7 +12,7 @@ export const App = () => {
         <Routes>
           <Route path={`/register/`} element={<Register />} />
           <Route path={`/login/`} element={<Login />} />
-          <Route path={`/food-register/`} element={<FoodRegister />} />
+          <Route path={`/dish-register/`} element={<DishRegister />} />
           <Route path={`/`} element={<Mypage />} />
         </Routes>
       </BrowserRouter>

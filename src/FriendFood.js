@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { db, auth } from "./firebase";
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 
 export const FriendFood = () =>{
     const [friendFood, setFriendFood] = useState([]);

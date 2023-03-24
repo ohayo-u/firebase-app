@@ -40,7 +40,7 @@ export const Mypage = () => {
             <p>{user?.displayName}</p>
             <p>{user?.email}</p>
             <div className="user-image"><img src={user?.photoURL} /></div>
-            <Link to={`/food-register/`}>料理を追加する</Link>
+            <Link to={`/dish-register/`}>料理を追加する</Link>
             <h2>作った料理</h2>
             <DishList />
             <h2>仲良し食材</h2>

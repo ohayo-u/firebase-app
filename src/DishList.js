@@ -25,7 +25,7 @@ export const DishList = () => {
         <ul className="list">
             {dishList.map((dish) => (
                 <li key={dish.id}>
-                    <p>{dish.name}</p> {/* onDoubleClickメソッドで、表示名を変更できるようにする */}
+                    <p>{dish.name}</p> 
                     <button onClick={() => deleteDish(dish.id)}>削除</button>
                 </li>
             ))}

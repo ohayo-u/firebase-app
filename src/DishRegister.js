@@ -3,8 +3,9 @@ import { Link, Navigate } from "react-router-dom";
 import { auth, db } from "./firebase";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
+import { FoodSelect } from "./FoodSelect";
 
-export const FoodRegister = () => {
+export const DishRegister = () => {
     const [user, setUser] = useState("");
     const [usedFoodId, setUsedFoodId] = useState([]);
     const [foodlist, setFoodlist] = useState([]);
@@ -22,24 +23,23 @@ export const FoodRegister = () => {
             setFoodlist(querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id})));
         });
         
-        
-    }, []);
-
-    const handleClick = (foodId) => {
-        setUsedFoodId([...usedFoodId, foodId]);
-        console.log(usedFoodId);
-        setFoodlist(
-            foodlist.filter((food) => (food.id !== foodId))
-        );
         console.log(foodlist);
 
-        const usedFoodDocumentRef = doc(db, 'food', foodId);
-        getDoc(usedFoodDocumentRef).then((documentSnapshot) => {
-            setUsedFood([...usedFood, {...documentSnapshot.data(), id: foodId}]);
-        });
+    }, []);
 
-        console.log(usedFood);
-    };
+    // const handleClick = (foodId) => {
+    //     setUsedFoodId([...usedFoodId, foodId]);
+
+    //     setFoodlist(
+    //         foodlist.filter((food) => (food.id !== foodId))
+    //     );
+
+    //     const usedFoodDocumentRef = doc(db, 'food', foodId);
+    //     getDoc(usedFoodDocumentRef).then((documentSnapshot) => {
+    //         setUsedFood([...usedFood, {...documentSnapshot.data(), id: foodId}]);
+    //     });
+
+    // };
 
 
     const handleSubmit = async (e) => {
@@ -51,10 +51,10 @@ export const FoodRegister = () => {
             name: dishName.value
         });
 
-        // dishドキュメント内のused-food配列にusedFoodId配列を追加するに変更する
-        await updateDoc(dishDocumentRef, {
-            usedFoodId: arrayUnion(...usedFoodId)
-        });
+        // await updateDoc(dishDocumentRef, {
+        //     usedFoodId: arrayUnion(...usedFoodId)
+        // });
+
     } ;
 
     return (
@@ -73,8 +73,7 @@ export const FoodRegister = () => {
                                     name="dishName"
                                     >
                                 </input>
-                                <h3>食材一覧</h3>
-                                {/* foodコレクションの表示 onclickでusedFoodId配列にid追加*/}
+                                {/* <h3>食材一覧</h3>
                                 <ul>
                                     {foodlist.map((food) => (
                                         <li key={food.id} onClick={() => handleClick(food.id)}>{food.name}</li>
@@ -83,8 +82,11 @@ export const FoodRegister = () => {
                                 <h3>使った食材</h3>
                                     {usedFood.map((food) => (
                                         <li key={food.id}>{food.name}</li>
-                                    ))}
+                                    ))} */}
+                                    <h3>使った食材</h3>
+                                <FoodSelect />
                                 <button>登録する</button>
+
                             </form>
                             <Link to={`/`}>マイページ</Link>
                         </div>
