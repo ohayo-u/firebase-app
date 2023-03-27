@@ -7,40 +7,15 @@ import { FoodSelect } from "./FoodSelect";
 
 export const DishRegister = () => {
     const [user, setUser] = useState("");
-    const [usedFoodId, setUsedFoodId] = useState([]);
     const [foodlist, setFoodlist] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [usedFood, setUsedFood] = useState([]);
 
     useEffect(() => {
         onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
             setLoading(false);
         });
-
-        const foodCollectionRef = collection(db, 'food');
-        getDocs(foodCollectionRef).then((querySnapshot) => {
-            setFoodlist(querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id})));
-        });
-        
-        console.log(foodlist);
-
     }, []);
-
-    // const handleClick = (foodId) => {
-    //     setUsedFoodId([...usedFoodId, foodId]);
-
-    //     setFoodlist(
-    //         foodlist.filter((food) => (food.id !== foodId))
-    //     );
-
-    //     const usedFoodDocumentRef = doc(db, 'food', foodId);
-    //     getDoc(usedFoodDocumentRef).then((documentSnapshot) => {
-    //         setUsedFood([...usedFood, {...documentSnapshot.data(), id: foodId}]);
-    //     });
-
-    // };
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,11 +26,8 @@ export const DishRegister = () => {
             name: dishName.value
         });
 
-        // await updateDoc(dishDocumentRef, {
-        //     usedFoodId: arrayUnion(...usedFoodId)
-        // });
-
-    } ;
+        // 入力した食材のIDを料理のusedfood配列に追加する
+ } ;
 
     return (
         <>
@@ -73,16 +45,6 @@ export const DishRegister = () => {
                                     name="dishName"
                                     >
                                 </input>
-                                {/* <h3>食材一覧</h3>
-                                <ul>
-                                    {foodlist.map((food) => (
-                                        <li key={food.id} onClick={() => handleClick(food.id)}>{food.name}</li>
-                                    ))}
-                                </ul>
-                                <h3>使った食材</h3>
-                                    {usedFood.map((food) => (
-                                        <li key={food.id}>{food.name}</li>
-                                    ))} */}
                                     <h3>使った食材</h3>
                                 <FoodSelect />
                                 <button>登録する</button>
@@ -97,8 +59,3 @@ export const DishRegister = () => {
         </>
     );
 };
-
-
-// form内で食材リストをfoodコレクションから持ってきて表示させる
-// クリックするとuseStateの配列、usedFoodIdにfoodドキュメントのIDが追加される
-// handleSubmitが実行されたら、usedFoodId配列がdishドキュメントのusedFoodIdフィールドに追加される

@@ -10,7 +10,7 @@ export const DishList = () => {
         const dishDocumentRef = doc(db, 'users', user.uid, 'dish-list', id);
         await deleteDoc(dishDocumentRef);
     };
-
+    
     useEffect(() => {
         const dishListCollectionRef = collection(db, 'users',user.uid ,'dish-list');
         const unsub = onSnapshot(dishListCollectionRef, (querySnapshot) => {

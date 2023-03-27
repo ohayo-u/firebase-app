@@ -13,7 +13,6 @@ export const FoodSelect = () => {
         
     }, []);
 
-
     return (
         <div>
             <Select 
