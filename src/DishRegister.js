@@ -1,9 +1,10 @@
-import { addDoc, arrayUnion, collection, doc, DocumentSnapshot, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, DocumentSnapshot, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import { Link, Navigate } from "react-router-dom";
 import { auth, db } from "./firebase";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import Select from "react-select";
+import { async } from "@firebase/util";
 
 export const DishRegister = () => {
     const [user, setUser] = useState("");
@@ -25,9 +26,12 @@ export const DishRegister = () => {
     }, []);
 
     const handleChange = (selectedOptions) => {
+        const selectedFood = [];
         selectedOptions.forEach((selectedOption) => {
-            console.log(selectedOption.value);   
+            selectedFood.push(selectedOption.value);   
         });
+        setFoodlist(selectedFood);
+        console.log(foodlist);
     };
 
     const handleSubmit = async (e) => {
@@ -40,6 +44,9 @@ export const DishRegister = () => {
         });
 
         // 入力した食材のIDを料理のusedfood配列に追加する
+        updateDoc(dishDocumentRef, {
+            usedFoodId: foodlist
+        });
  } ;
 
     return (
