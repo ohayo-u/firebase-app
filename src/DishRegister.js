@@ -3,19 +3,32 @@ import { Link, Navigate } from "react-router-dom";
 import { auth, db } from "./firebase";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { FoodSelect } from "./FoodSelect";
+import Select from "react-select";
 
 export const DishRegister = () => {
     const [user, setUser] = useState("");
     const [foodlist, setFoodlist] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [options, setOptions] = useState([]);
 
     useEffect(() => {
         onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
             setLoading(false);
         });
+
+        const foodCollectionRef = collection(db, 'food');
+        getDocs(foodCollectionRef).then((querySnapshot) => {
+            setOptions(querySnapshot.docs.map((doc) => ({ value: doc.id, label: doc.data().name})))
+        });
+
     }, []);
+
+    const handleChange = (selectedOptions) => {
+        selectedOptions.forEach((selectedOption) => {
+            console.log(selectedOption.value);   
+        });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -46,7 +59,11 @@ export const DishRegister = () => {
                                     >
                                 </input>
                                     <h3>使った食材</h3>
-                                <FoodSelect />
+                                    <Select 
+                                        options={options}
+                                        isMulti
+                                        onChange={handleChange}
+                                    />
                                 <button>登録する</button>
 
                             </form>
