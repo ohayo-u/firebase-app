@@ -1,74 +1,33 @@
-import { useEffect, useState } from "react";
-import { 
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-} from "firebase/auth";
-import { Navigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react"
+import { Navigate } from "react-router-dom";
+import { onAuthStateChanged} from "firebase/auth";
 import { auth } from "../firebase";
-import { SignInButton } from "./SignInButton";
+import { GoogleSignIn } from "./GoogleSignIn";
 
 export const Login = () => {
-    const [loginEmail, setLoginEmail] = useState("");
-    const [loginPassword, setLoginPassword] = useState("");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const [user, setUser] = useState("");
 
-        try { 
-            await signInWithEmailAndPassword(
-                auth,
-                loginEmail,
-                loginPassword
-        );
-         } catch(error) {
-            alert("メールアドレスまたはパスワードが間違っています");
-         }
-    };
-
-    const [user, setUser] = useState();
-
-    useEffect(() => {
-        onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-        });
-    },[]);
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+  }, []);
 
     return (
       <>
       {user ? (
-        <Navigate to={'/'} />
+        <Navigate to={`/`} />
       ) : (
-        <>
-        <h1>ログインページ</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>メールアドレス</label>
-            <input
-              name="email"
-              type="email"
-              value={loginEmail}
-              onChange={(e) => setLoginEmail(e.target.value)}
-            />
+        <div className="login">
+          <h1>MOG!</h1>
+          <div className="sign-in-buttons"> 
+            <GoogleSignIn />
+            {/* <TwitterSignIn /> */}
           </div>
-          <div>
-            <label>パスワード</label>
-            <input
-              name="password"
-              type="password"
-              value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value)}
-
-            />
-          </div>
-          <button>ログイン</button>
-          <p>新規登録は<Link to={`/register/`}>こちら</Link></p>
-        </form>
-        </>
-        )};
-        <SignInButton />
+          
+        </div>
+        )}
       </>
     );
   };
-
-  
-  
