@@ -6,12 +6,13 @@ import { Mypage } from './Mypage';
 export const App = () => {
     return (
       <>
-        <BrowserRouter>
+        {/* <BrowserRouter>
         <Routes>
           <Route path={`/login/`} element={<Login />} />
           <Route path={`/`} element={<Mypage />} />
         </Routes>
-        </BrowserRouter>
+        </BrowserRouter> */}
+        <Login />
       </>                                  
     );
 }

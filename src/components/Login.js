@@ -16,9 +16,9 @@ export const Login = () => {
 
     return (
       <>
-      {user ? (
+      {/* {user ? (
         <Navigate to={`/`} />
-      ) : (
+      ) : ( */}
         <div className="login">
           <h1>MOG!</h1>
           <div className="sign-in-buttons"> 
@@ -27,7 +27,7 @@ export const Login = () => {
           </div>
           
         </div>
-        )}
+        {/* )} */}
       </>
     );
   };
