@@ -1,9 +1,6 @@
-// friend-foodコレから参照しているが、dishドキュメントのused-food配列にIDのあるfoodコレクションのドキュメントを表示するように変更する
-
 import { useEffect, useState } from "react";
 import { db, auth } from "./firebase";
-import { collection, doc, getDoc, getDocs, onSnapshot } from "firebase/firestore";
-import { async } from "@firebase/util";
+import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 
 export const FriendFood = () =>{
     const user = auth.currentUser;

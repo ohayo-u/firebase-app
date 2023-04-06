@@ -1,10 +1,9 @@
-import { addDoc, arrayUnion, collection, doc, DocumentSnapshot, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 import { Link, Navigate } from "react-router-dom";
 import { auth, db } from "./firebase";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import Select from "react-select";
-import { async } from "@firebase/util";
 
 export const DishRegister = () => {
     const [user, setUser] = useState("");

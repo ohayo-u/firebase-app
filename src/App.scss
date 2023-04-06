@@ -1,0 +1,254 @@
+$base: #fff3e0;
+$main: #f94439;
+$accent: #3abad6;
+$text: #3f3f3a;
+
+html {
+  background-color: $base;
+}
+
+body {
+  color: $text;
+  height: 2000px; //中身スカスカだからとりあえず長くした
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: $text;
+}
+
+li {
+  list-style: none;
+}
+.container {
+  padding: 20px 40px;
+  margin: 0 auto;
+}
+
+.section-title {
+  border-bottom: #3abad6 2px solid;
+  padding-bottom: 5px;
+  display: inline-block;
+}
+
+button {
+  color: $base;
+  background-color: $accent;
+  border: $accent;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// header
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  li {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.logout {
+  position: absolute;
+  bottom: -10px;
+  left: -10px;
+  font-size: 3px;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  li {
+    padding-left: 30px;
+  }
+}
+
+#account {
+  position: relative;
+  img {
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+}
+
+#add {
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 16px;
+}
+
+//login
+.login {
+  text-align: center;
+  h1 {
+    font-size: 200px;
+  }
+}
+
+.sign-in-buttons {
+  button {
+    padding: 0 40px;
+    border-radius: 30px;
+    background-color: #f94439;
+}
+  p {
+    font-size: 20px;
+  }
+}
+
+// main
+#fixed-add-btn {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 9;
+  cursor: pointer;
+}
+
+.add-btn {
+  font-size: 24px;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 20px;
+}
+.food-list {
+  display: flex;
+  flex-wrap: wrap;
+  img {
+    width: 150px;
+  }
+}
+
+.food {
+  text-align: center;
+  margin-right: 80px;
+  cursor: pointer;
+}
+
+.title-and-btn {
+  display: flex;
+  align-items: center;
+  img {
+    width: 40px;
+    margin-left: 20px;
+  }
+}
+
+.dish-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dish {
+  margin: 20px;
+  border: solid $main 1px;
+  padding: 0 20px;
+  img {
+    width: 300px;
+  }
+}
+
+// modal
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  }
+
+.modal-inner {
+  position: absolute;
+  position: relative;
+  top: 100px;
+  left: 0;
+  right: 0;
+  width: 600px;
+  background-color: $base;
+  border-radius: 20px;
+  margin: auto;
+  padding: 50px;
+  text-align: center;
+  input {
+    background-color: $base;
+    border: none ;
+    border-bottom: #3f3f3a solid 1px;
+    padding: 5px;
+    font-size: 24px;
+  }
+  }
+
+  // register-modal
+
+  .food-select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h3 {
+      padding-right: 20px;
+    }
+    #select_list {
+      width: 300px;
+    }
+  }
+
+.modal-close-btn {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  color: $text;
+  background-color: $main;
+  text-align: center;
+  font-size: 30px;
+}
+
+.save-btn {
+  padding: 10px 30px;
+  color: $text;
+  background-color: $accent;
+  border-radius: 5px;
+  border: none;
+  margin-top: 30px;
+}
+
+// food-modal
+#nakayoshi_heart {
+  width: 300px;
+}
+
+// dish-modal
+.del-and-mod-btn {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.delete-btn, .modify-btn {
+  width: 50px;
+  margin: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.delete-btn {
+  color: $main;
+}

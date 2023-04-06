@@ -12,14 +12,14 @@ export const DishList = () => {
     };
     
     useEffect(() => {
-        const dishListCollectionRef = collection(db, 'users',user.uid ,'dish-list');
+        const dishListCollectionRef = collection(db, 'users', user.uid ,'dish-list');
         const unsub = onSnapshot(dishListCollectionRef, (querySnapshot) => {
             setDishList(
                 querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))
             );
         });
         return unsub;
-        },[]);
+    },[]);
 
     return(
         <ul className="list">
