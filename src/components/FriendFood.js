@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db, auth } from "./firebase";
+import { db, auth } from "../firebase";
 import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 
 export const FriendFood = () =>{

@@ -4,7 +4,7 @@ import {
     onAuthStateChanged,
 } from "firebase/auth";
 import { Navigate, Link } from "react-router-dom";
-import { auth } from "./firebase";
+import { auth } from "../firebase";
 import { SignInButton } from "./SignInButton";
 
 export const Login = () => {

@@ -3,7 +3,7 @@ import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
 } from "firebase/auth";
-import { db, auth } from "./firebase";
+import { db, auth } from "../firebase";
 import { Navigate, Link } from "react-router-dom";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { SignInButton } from "./SignInButton";
