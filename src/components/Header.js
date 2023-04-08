@@ -8,12 +8,12 @@ export function Header({setIsModalOpen, user}) {
 
   const [visible, setVisible] = useState(false);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const logout = async() => {
-    await signOut(auth);
-    navigate("/login/");
-  }
+  // const logout = async() => {
+  //   await signOut(auth);
+  //   navigate("/login/");
+  // }
 
     return (
       <header>
@@ -29,7 +29,7 @@ export function Header({setIsModalOpen, user}) {
               <img src={user?.photoURL} onClick={() => setVisible(!visible)}/>
               <button 
                 className="logout" 
-                onClick={logout}
+                // onClick={logout}
                 style={{ visibility: visible ? "visible" : "hidden"}}
                 >
                   ログアウト</button>

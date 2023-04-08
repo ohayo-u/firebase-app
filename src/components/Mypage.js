@@ -54,12 +54,12 @@ export const Mypage = () => {
 
   return (
     <>
-      {!loading && (
+      {/* {!loading && (
         <>
           {!user ? (
             <Navigate to={`/login/`} />
-          ) : (
-            <body>
+          ) : ( */}
+            <>
               <Header 
                 setIsModalOpen={setIsModalOpen}
                 user={user}/>
@@ -99,11 +99,11 @@ export const Mypage = () => {
                   {modal}
                 </div>
               </div>
-            </body>
-              )
+            </>
+              {/* )
           }
         </>)
-      }
+      } */}
     </>
   );
 }
