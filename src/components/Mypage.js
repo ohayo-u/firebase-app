@@ -8,6 +8,7 @@ import { Header } from './Header';
 import { RegisterModal } from './RegisterModal';
 import { useState, useEffect } from 'react';
 import fixed_add_btn from '../images/fixed_add_btn.png'
+import { Login } from './Login';
 
 export const Mypage = () => {
   const [user, setUser] = useState("");
@@ -18,29 +19,27 @@ export const Mypage = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        setLoading(false);
-        
-        const dishListCollectionRef = collection(db, 'users', currentUser.uid ,'dish-list');
-        const unsub = onSnapshot(dishListCollectionRef, (querySnapshot) => {
-            setDishList(
-                querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))
-            );
-    
-            const duplicatedFoodId = [];
-            querySnapshot.docs.forEach((doc) => {duplicatedFoodId.push(...doc.data().usedFoodId)});
-            const friendFoodIds = Array.from(new Set(duplicatedFoodId));
-            Promise.all(friendFoodIds.map(async (foodId) => {
-              const friendFoodDocRef = doc(db, 'food', foodId);
-              const documentSnapshot = await getDoc(friendFoodDocRef);
-              return { id: foodId, name: documentSnapshot.data().name};
-            })).then((friendFoodDocs) => setFriendFoodList(friendFoodDocs))
-              
-        });
-    
-        return unsub;
-      }
+      setUser(currentUser);
+      setLoading(false);
+      
+      const dishListCollectionRef = collection(db, 'users', currentUser.uid ,'dish-list');
+      const unsub = onSnapshot(dishListCollectionRef, (querySnapshot) => {
+          setDishList(
+              querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))
+          );
+  
+          const duplicatedFoodId = [];
+          querySnapshot.docs.forEach((doc) => {duplicatedFoodId.push(...doc.data().usedFoodId)});
+          const friendFoodIds = Array.from(new Set(duplicatedFoodId));
+          Promise.all(friendFoodIds.map(async (foodId) => {
+            const friendFoodDocRef = doc(db, 'food', foodId);
+            const documentSnapshot = await getDoc(friendFoodDocRef);
+            return { id: foodId, name: documentSnapshot.data().name};
+          })).then((friendFoodDocs) => setFriendFoodList(friendFoodDocs))
+            
+      });
+  
+      return unsub;
     });
   },[]);
 
@@ -54,11 +53,11 @@ export const Mypage = () => {
 
   return (
     <>
-      {/* {!loading && (
+      {!loading && (
         <>
           {!user ? (
-            <Navigate to={`/login/`} />
-          ) : ( */}
+            <Login />
+          ) : (
             <>
               <Header 
                 setIsModalOpen={setIsModalOpen}
@@ -100,10 +99,10 @@ export const Mypage = () => {
                 </div>
               </div>
             </>
-              {/* )
+              )
           }
         </>)
-      } */}
+      }
     </>
   );
 }

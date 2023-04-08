@@ -3,8 +3,8 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{userId}/{documents=**} {
       allow read: if request.auth != null;
-      allow create: if request.auth.uid == request.resource.data.author_uid;
-      allow update, delete: if request.auth.uid == resource.data.author_uid;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null;
     }
     match /food/{documents=**} {
       allow read: if request.auth != null;
