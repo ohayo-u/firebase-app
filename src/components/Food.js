@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import heart1 from '../images/heart1.png';
@@ -13,12 +13,13 @@ export function Food({food, user}) {
   const [containDishList, setContainDishList] = useState([]);
 
   useEffect(() => {
-    // すでにある食材を登録したときに、リロードしないと今までにつくった料理に反映されないので要修正
     const dishListCollectionRef = collection(db, 'users', user.uid, 'dish-list');
     const containDishDocs = query(dishListCollectionRef, where('usedFoodId', 'array-contains', food.id));
-    getDocs(containDishDocs).then((querySnapshot) => {
-      setContainDishList(querySnapshot.docs.map((doc) => ({name: doc.data().name, id: doc.id})));
+    const unsub = onSnapshot(containDishDocs, (querySnapshot) => {
+        setContainDishList(querySnapshot.docs.map((doc) => ({name: doc.data().name, id: doc.id})));
     });
+
+    return unsub;
   }, []);
 
   const dishCount = containDishList.length;

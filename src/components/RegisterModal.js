@@ -17,8 +17,6 @@ export function RegisterModal({
     isNewRegistration == true ? ( "" ) : ( defaultDish.name )
     );
 
-  console.log('defaultfoodList:', foodlist);
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -79,7 +77,6 @@ export function RegisterModal({
         selectedFood.push(selectedOption.value);   
     });
     setFoodlist(selectedFood);
-  console.log('changedfoodList:', foodlist);
   };
 
   const handleSubmit = (e) => {
