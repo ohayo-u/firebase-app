@@ -10,7 +10,14 @@ export function RegisterModal({
   const [fishOptions,  setFishOptions] = useState([]);
   const [otherOptions, setOtherOptions] = useState([]);
   const [displayOptions, setDisplayOptions] = useState([]);
-  const [foodlist, setFoodlist] = useState([]);
+  const [foodlist, setFoodlist] = useState(
+    isNewRegistration == true ? ( [] ) : ( defaultDish.usedFoodId )
+  );
+  const [dishName, setDishName] = useState(
+    isNewRegistration == true ? ( "" ) : ( defaultDish.name )
+    );
+
+  console.log('defaultfoodList:', foodlist);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -65,14 +72,15 @@ export function RegisterModal({
   ];
 
   // もう少し簡潔に書く方法がありそう
-  const handleChange = (selectedOptions) => {
+  const optionChange = (selectedOptions) => {
     setDisplayOptions(selectedOptions);
     const selectedFood = [];
     selectedOptions.forEach((selectedOption) => {
         selectedFood.push(selectedOption.value);   
     });
     setFoodlist(selectedFood);
-  }
+  console.log('changedfoodList:', foodlist);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -108,10 +116,14 @@ export function RegisterModal({
     <div className='modal'>
       <div className='modal-inner'>
         <form onSubmit={handleSubmit}>
-          <input type='text' 
-          // placeholderじゃなくてvalueにしたい
-          placeholder={defaultDish !== undefined ? defaultDish.name : '料理名'}
-          name="dishName"></input>
+          <input 
+            name="dishName"
+            onChange={(e) => setDishName(e.target.value)}
+            placeholder='料理名'
+            type='text' 
+            value={dishName}
+            >
+          </input>
           <div className="food-select">
             <h3>使った食材</h3>
             <Select
@@ -119,7 +131,7 @@ export function RegisterModal({
               isMulti
               id="select_list"
               value={displayOptions}
-              onChange={handleChange}
+              onChange={optionChange}
             />
           </div>
           <button className="save-btn">保存</button>
