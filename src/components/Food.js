@@ -44,7 +44,8 @@ export function Food({food, user}) {
   }
 
   const modal = isModalOpen ? (
-    <div className="modal">
+    <>
+      <div className="modal" onClick={() => setIsModalOpen(false)}></div>
       <div className="modal-inner">  
         <p>あなたと{food.name}は</p>
         <h1>{relation}</h1> 
@@ -53,11 +54,7 @@ export function Food({food, user}) {
         <h2 className="section-title">今までにつくった{food.name}料理</h2>
         <ul className="dish-list">
           {containDishList.map((containDish) => (
-            <Dish
-            key={containDish.id}
-            dish={containDish}
-            user={user}
-            />
+            <li key={containDish.id}>{containDish.name}</li>
           ))} 
         </ul>
         <button
@@ -67,7 +64,7 @@ export function Food({food, user}) {
           ×
         </button>
       </div>
-    </div>
+    </>
   ) : (null);
 
   return (

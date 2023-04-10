@@ -148,6 +148,10 @@ header {
 .dish-list {
   display: flex;
   flex-wrap: wrap;
+  li {
+    padding: 10px;
+    font-size: 20px;
+  }
 }
 
 .dish {
@@ -171,15 +175,16 @@ header {
   }
 
 .modal-inner {
-  position: absolute;
   position: relative;
+  position: fixed;
+  z-index: 11;
   top: 100px;
   left: 0;
   right: 0;
+  margin: auto;
   width: 600px;
   background-color: $base;
   border-radius: 20px;
-  margin: auto;
   padding: 50px;
   text-align: center;
   input {

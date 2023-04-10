@@ -110,7 +110,8 @@ export function RegisterModal({
   };
 
   return (
-    <div className='modal'>
+    <>
+      <div className='modal' onClick={() => modalClose()}></div>
       <div className='modal-inner'>
         <form onSubmit={handleSubmit}>
           <input 
@@ -140,6 +141,6 @@ export function RegisterModal({
           ×
         </button>
       </div>
-    </div>
+    </>
   );
 }

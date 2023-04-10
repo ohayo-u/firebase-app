@@ -42,28 +42,27 @@ export function DishModal ({dish, user, setIsModalOpen, setIsDishModalOpen}) {
 
   return (
     <>
-      <div className="modal">
-        <div className="modal-inner">  
-          <h1>{dish.name}</h1>
-          <h2 className="section-title">この料理で使った食材</h2>
-          {usedFood.map((food) => (
-            <Food
-              key={food.id}
-              food={food}
-              user={user}
-            /> 
-          ))}
-          <div className="del-and-mod-btn">
-            <button className="delete-btn" onClick={() => deleteDish()}>削除</button>
-            <button className="modify-btn" onClick={() => setIsModifyModalOpen(true)}>修正</button>
-          </div>
-          <button
-            className='modal-close-btn'
-            onClick={() => setIsDishModalOpen(false)}
-            >
-            ×
-          </button>
+      <div className="modal" onClick={() => setIsDishModalOpen(false)}></div>
+      <div className="modal-inner">  
+        <h1>{dish.name}</h1>
+        <h2 className="section-title">この料理で使った食材</h2>
+        {usedFood.map((food) => (
+          <Food
+            key={food.id}
+            food={food}
+            user={user}
+          /> 
+        ))}
+        <div className="del-and-mod-btn">
+          <button className="delete-btn" onClick={() => deleteDish()}>削除</button>
+          <button className="modify-btn" onClick={() => setIsModifyModalOpen(true)}>修正</button>
         </div>
+        <button
+          className='modal-close-btn'
+          onClick={() => setIsDishModalOpen(false)}
+          >
+          ×
+        </button>
       </div>
       {modal}
     </>
