@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Select from "react-select"; 
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import { doc, collection, getDocs, addDoc, query, where, updateDoc } from "firebase/firestore";
+import { ref, uploadBytes } from "firebase/storage";
 
 export function RegisterModal({
   setIsModalOpen, setIsModifyModalOpen, user, defaultDish, isNewRegistration}) {
@@ -10,6 +11,7 @@ export function RegisterModal({
   const [fishOptions,  setFishOptions] = useState([]);
   const [otherOptions, setOtherOptions] = useState([]);
   const [displayOptions, setDisplayOptions] = useState([]);
+  const [image, setImage] = useState();
   const [foodlist, setFoodlist] = useState(
     isNewRegistration == true ? ( [] ) : ( defaultDish.usedFoodId )
   );
@@ -83,15 +85,28 @@ export function RegisterModal({
     e.preventDefault();
     const dishName = e.target.elements.dishName;
 
-    if( isNewRegistration == true ) {
+    if( isNewRegistration ) {
       const dishListCollectionRef = collection(db, 'users', user.uid, 'dish-list');
-      addDoc(dishListCollectionRef, {
-        name: dishName.value,
-        usedFoodId: foodlist
-      });
+      if(image) {
+        const imageUrl = `images/dish/${user.uid}/${image.name}`;
+        const dishRef = ref(storage, imageUrl);
+        uploadBytes(dishRef, image).then(() => {
+          addDoc(dishListCollectionRef, {
+            name: dishName.value,
+            usedFoodId: foodlist,
+            imageURL: imageUrl
+          });
+        });
+
+      } else {
+        addDoc(dishListCollectionRef, {
+          name: dishName.value,
+          usedFoodId: foodlist,
+        });
+      }
+
       setIsModalOpen(false);
     } else {
-      // dishName.value, foodlistを元にfirestoreのドキュメントを修正する処理
       const defaultDishDocRef = doc(db, 'users', user.uid, 'dish-list', defaultDish.id);
       updateDoc(defaultDishDocRef, {
         name: dishName.value,
@@ -102,7 +117,7 @@ export function RegisterModal({
   }
 
   const modalClose = () => {
-    if( isNewRegistration == true ) {
+    if( isNewRegistration ) {
       setIsModalOpen(false);
     } else {
       setIsModifyModalOpen(false);
@@ -114,6 +129,12 @@ export function RegisterModal({
       <div className='modal' onClick={() => modalClose()}></div>
       <div className='modal-inner'>
         <form onSubmit={handleSubmit}>
+          <input
+            accept=".png, .jpg, .jpeg"
+            type="file"
+            onChange={(e) => setImage(e.target.files[0])}
+            >
+            </input>
           <input 
             name="dishName"
             onChange={(e) => setDishName(e.target.value)}

@@ -4,7 +4,7 @@ import { db } from "../firebase";
 import { Food } from "./Food";
 import { RegisterModal } from "./RegisterModal";
 
-export function DishModal ({dish, user, setIsModalOpen, setIsDishModalOpen}) {
+export function DishModal ({dish, user, setIsModalOpen, setIsDishModalOpen, imgURL }) {
   const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
   const [usedFood, setUsedFood] = useState([]);
   
@@ -44,6 +44,7 @@ export function DishModal ({dish, user, setIsModalOpen, setIsDishModalOpen}) {
     <>
       <div className="modal" onClick={() => setIsDishModalOpen(false)}></div>
       <div className="modal-inner">  
+        <img src={imgURL ? imgURL : undefined} />
         <h1>{dish.name}</h1>
         <h2 className="section-title">この料理で使った食材</h2>
         {usedFood.map((food) => (

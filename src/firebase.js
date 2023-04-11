@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -10,13 +11,14 @@ const firebaseConfig = {
     storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
-};
+    storageBucket: 'gs://fir-app-57788.appspot.com'
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider(); 
 const db = getFirestore(app);
-const user = auth.currentUser;
+const storage = getStorage(app);
 
-export { auth, provider, db, user };
+export { auth, provider, db, storage};
