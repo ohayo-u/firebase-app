@@ -3,28 +3,28 @@ import { DishModal } from "./DishModal";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../firebase";
 
-export function Dish({dish, user, setIsModalOpen}) {
+export function Dish({ dish, user }) {
   const [isDishModalOpen, setIsDishModalOpen] = useState(false);
   const [imgURL, setImgURL] = useState(false);
 
   useEffect(() => {
     const imgPathRef = ref(
-      storage, dish.imageURL !== undefined ? dish.imageURL : 'images/others/no_image.png' 
-      );
+      storage,
+      dish.imageURL !== undefined ? dish.imageURL : "images/others/no_image.png"
+    );
     getDownloadURL(imgPathRef).then((url) => {
       setImgURL(url);
     });
   }, [dish.imageURL]);
-  
+
   const dishModal = isDishModalOpen ? (
-    <DishModal 
+    <DishModal
       dish={dish}
       user={user}
-      setIsModalOpen={setIsModalOpen} 
       setIsDishModalOpen={setIsDishModalOpen}
       imgURL={imgURL}
     />
-  ) : (null);
+  ) : null;
 
   return (
     <div className="dish-wrapper">

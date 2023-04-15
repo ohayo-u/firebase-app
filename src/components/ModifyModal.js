@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
 import { db, storage } from "../firebase";
-import { collection, getDocs, addDoc, query, where } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import {
+  doc,
+  collection,
+  getDocs,
+  query,
+  where,
+  setDoc,
+} from "firebase/firestore";
+import { deleteObject, ref, uploadBytes } from "firebase/storage";
 
-export function RegisterModal({ setIsModalOpen, user }) {
+export function ModifyModal({ setIsModifyModalOpen, user, defaultDish }) {
   const [vegiOptions, setVegiOptions] = useState([]);
   const [meatOptions, setMeatOptions] = useState([]);
   const [fishOptions, setFishOptions] = useState([]);
   const [otherOptions, setOtherOptions] = useState([]);
   const [displayOptions, setDisplayOptions] = useState([]);
   const [image, setImage] = useState();
-  const [foodlist, setFoodlist] = useState([]);
-  const [dishName, setDishName] = useState("");
+  const [foodlist, setFoodlist] = useState(defaultDish.usedFoodId);
+  const [dishName, setDishName] = useState(defaultDish.name);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,6 +80,22 @@ export function RegisterModal({ setIsModalOpen, user }) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const allOptions = [
+      ...vegiOptions,
+      ...meatOptions,
+      ...fishOptions,
+      ...otherOptions,
+    ];
+
+    const defaultFoodId = defaultDish.usedFoodId;
+    const defaultOptions = allOptions.filter((option) =>
+      defaultFoodId.includes(option.value)
+    );
+
+    setDisplayOptions(defaultOptions);
+  }, [vegiOptions, meatOptions, fishOptions, otherOptions]);
+
   const groupedOptions = [
     { label: "野菜", options: vegiOptions },
     { label: "肉", options: meatOptions },
@@ -93,34 +116,36 @@ export function RegisterModal({ setIsModalOpen, user }) {
     e.preventDefault();
     const dishName = e.target.elements.dishName.value;
 
-    const dishListCollectionRef = collection(
+    const defaultDishDocRef = doc(
       db,
       "users",
       user.uid,
-      "dish-list"
+      "dish-list",
+      defaultDish.id
     );
+    defaultDish.imageURL && deleteObject(ref(storage, defaultDish.imageURL));
     if (image) {
       const imageUrl = `images/dish/${user.uid}/${image.name}`;
       const dishImageRef = ref(storage, imageUrl);
       uploadBytes(dishImageRef, image).then(() => {
-        addDoc(dishListCollectionRef, {
+        setDoc(defaultDishDocRef, {
           name: dishName,
           usedFoodId: foodlist,
           imageURL: imageUrl,
         });
       });
     } else {
-      addDoc(dishListCollectionRef, {
+      setDoc(defaultDishDocRef, {
         name: dishName,
         usedFoodId: foodlist,
       });
     }
-    setIsModalOpen(false);
+    setIsModifyModalOpen(false);
   };
 
   return (
     <>
-      <div className="modal" onClick={() => setIsModalOpen(false)}></div>
+      <div className="modal" onClick={() => setIsModifyModalOpen(false)}></div>
       <div className="modal-inner">
         <form onSubmit={handleSubmit}>
           <input
@@ -149,7 +174,7 @@ export function RegisterModal({ setIsModalOpen, user }) {
         </form>
         <button
           className="modal-close-btn"
-          onClick={() => setIsModalOpen(false)}
+          onClick={() => setIsModifyModalOpen(false)}
         >
           ×
         </button>
