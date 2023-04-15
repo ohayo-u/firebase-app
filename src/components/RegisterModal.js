@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Select from "react-select"; 
 import { db, storage } from "../firebase";
-import { doc, collection, getDocs, addDoc, query, where, updateDoc } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import { doc, collection, getDocs, addDoc, query, where, updateDoc, setDoc } from "firebase/firestore";
+import { deleteObject, ref, uploadBytes } from "firebase/storage";
 
 export function RegisterModal({
   setIsModalOpen, setIsModifyModalOpen, user, defaultDish, isNewRegistration}) {
@@ -83,16 +83,18 @@ export function RegisterModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const dishName = e.target.elements.dishName;
-
+    const dishName = e.target.elements.dishName.value;
+    console.log(image);
+    
     if( isNewRegistration ) {
+      
       const dishListCollectionRef = collection(db, 'users', user.uid, 'dish-list');
       if(image) {
         const imageUrl = `images/dish/${user.uid}/${image.name}`;
-        const dishRef = ref(storage, imageUrl);
-        uploadBytes(dishRef, image).then(() => {
+        const dishImageRef = ref(storage, imageUrl);
+        uploadBytes(dishImageRef, image).then(() => {
           addDoc(dishListCollectionRef, {
-            name: dishName.value,
+            name: dishName,
             usedFoodId: foodlist,
             imageURL: imageUrl
           });
@@ -100,21 +102,35 @@ export function RegisterModal({
 
       } else {
         addDoc(dishListCollectionRef, {
-          name: dishName.value,
+          name: dishName,
           usedFoodId: foodlist,
         });
       }
 
       setIsModalOpen(false);
+
     } else {
       const defaultDishDocRef = doc(db, 'users', user.uid, 'dish-list', defaultDish.id);
-      updateDoc(defaultDishDocRef, {
-        name: dishName.value,
-        usedFoodId: foodlist
-      });
+      defaultDish.imageURL && deleteObject(ref(storage, defaultDish.imageURL));
+      if(image) {
+        const imageUrl = `images/dish/${user.uid}/${image.name}`;
+        const dishImageRef = ref(storage, imageUrl);
+        uploadBytes(dishImageRef, image).then(() => {
+          updateDoc(defaultDishDocRef, {
+            name: dishName,
+            usedFoodId: foodlist,
+            imageURL: imageUrl
+          });
+        });
+      } else {
+        setDoc(defaultDishDocRef, {
+          name: dishName,
+          usedFoodId: foodlist
+        });
+      }
       setIsModifyModalOpen(false);
     }
-  }
+  };
 
   const modalClose = () => {
     if( isNewRegistration ) {

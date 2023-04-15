@@ -1,8 +1,9 @@
 import { deleteDoc, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import { Food } from "./Food";
 import { RegisterModal } from "./RegisterModal";
+import { deleteObject, ref } from "firebase/storage";
 
 export function DishModal ({dish, user, setIsModalOpen, setIsDishModalOpen, imgURL }) {
   const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
@@ -26,7 +27,15 @@ export function DishModal ({dish, user, setIsModalOpen, setIsDishModalOpen, imgU
 
   const deleteDish = () => {
     setIsDishModalOpen(false);
-    deleteDoc(dishDocRef);
+    
+    if(dish.imageURL !== undefined) {
+      const dishImageRef = ref(storage, dish.imageURL)
+      deleteObject(dishImageRef).then(() => {
+        deleteDoc(dishDocRef);
+      });
+    } else {
+      deleteDoc(dishDocRef);
+    }
   };
 
   const modal = isModifyModalOpen ? (

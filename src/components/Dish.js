@@ -14,7 +14,7 @@ export function Dish({dish, user, setIsModalOpen}) {
     getDownloadURL(imgPathRef).then((url) => {
       setImgURL(url);
     });
-  }, []);
+  }, [dish.imageURL]);
   
   const dishModal = isDishModalOpen ? (
     <DishModal 
