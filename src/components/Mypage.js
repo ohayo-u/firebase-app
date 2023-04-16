@@ -1,7 +1,6 @@
 import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, onSnapshot, doc, getDoc } from "firebase/firestore";
-import { Navigate } from "react-router-dom";
 import { Dish } from "./Dish";
 import { Food } from "./Food";
 import { Header } from "./Header";

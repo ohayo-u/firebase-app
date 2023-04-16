@@ -77,7 +77,6 @@ header {
     border-radius: 50%;
     cursor: pointer;
   }
-
 }
 
 #add {
@@ -86,7 +85,7 @@ header {
   font-size: 16px;
 }
 
-//login
+// login
 .login {
   text-align: center;
   h1 {
@@ -99,7 +98,7 @@ header {
     padding: 0 40px;
     border-radius: 30px;
     background-color: #f94439;
-}
+  }
   p {
     font-size: 20px;
   }
@@ -176,7 +175,7 @@ header {
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 10;
-  }
+}
 
 .modal-inner {
   position: relative;
@@ -186,33 +185,33 @@ header {
   left: 0;
   right: 0;
   margin: auto;
-  width: 600px;
+  width: 800px;
   background-color: $base;
   border-radius: 20px;
   padding: 50px;
   text-align: center;
   input {
     background-color: $base;
-    border: none ;
+    border: none;
     border-bottom: #3f3f3a solid 1px;
     padding: 5px;
     font-size: 24px;
   }
-  }
+}
 
-  // register-modal
+// register-modal
 
-  .food-select {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    h3 {
-      padding-right: 20px;
-    }
-    #select_list {
-      width: 300px;
-    }
+.food-select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    padding-right: 20px;
   }
+  #select_list {
+    width: 300px;
+  }
+}
 
 .modal-close-btn {
   position: absolute;
@@ -241,6 +240,13 @@ header {
 #nakayoshi_heart {
   width: 300px;
 }
+.food-info {
+  display: flex;
+  justify-content: space-around;
+  img {
+    width: 300px;
+  }
+}
 
 // dish-modal
 .del-and-mod-btn {
@@ -251,7 +257,8 @@ header {
   flex-direction: column;
 }
 
-.delete-btn, .modify-btn {
+.delete-btn,
+.modify-btn {
   width: 50px;
   margin: 5px;
   padding: 5px 10px;

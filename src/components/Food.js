@@ -1,23 +1,18 @@
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
+import { ref, getDownloadURL } from "firebase/storage";
 import heart1 from "../images/heart1.png";
 import heart2 from "../images/heart2.png";
 import heart3 from "../images/heart3.png";
 import heart4 from "../images/heart4.png";
 import heart5 from "../images/heart5.png";
-import { Dish } from "./Dish";
 import { FoodModal } from "./FoodModal";
 
 export function Food({ food, user }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [containDishList, setContainDishList] = useState([]);
+  const [foodImgURL, setFoodImgURL] = useState();
 
   useEffect(() => {
     const dishListCollectionRef = collection(
@@ -32,10 +27,17 @@ export function Food({ food, user }) {
     );
     const unsub = onSnapshot(containDishDocs, (querySnapshot) => {
       setContainDishList(
-        querySnapshot.docs.map((doc) => ({ name: doc.data().name, id: doc.id }))
+        querySnapshot.docs.map((doc) => ({
+          name: doc.data().name,
+          imageURL: doc.data().imageURL,
+          id: doc.id,
+        }))
       );
     });
-
+    const imgPathRef = ref(storage, `images/food/${food.id}.png`);
+    getDownloadURL(imgPathRef).then((url) => {
+      setFoodImgURL(url);
+    });
     return unsub;
   }, []);
 
@@ -67,13 +69,15 @@ export function Food({ food, user }) {
       relation={relation}
       nakayoshiImg={nakayoshiImg}
       containDishList={containDishList}
+      foodImgURL={foodImgURL}
     />
   ) : null;
 
   return (
     <>
-      <div className="food">
-        <h3 onClick={() => setIsModalOpen(true)}>{food.name}</h3>
+      <div className="food" onClick={() => setIsModalOpen(true)}>
+        <img src={foodImgURL}></img>
+        <h3>{food.name}</h3>
         <img src={nakayoshiImg}></img>
       </div>
       {modal}
