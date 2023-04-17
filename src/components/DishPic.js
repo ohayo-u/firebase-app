@@ -17,9 +17,9 @@ export function DishPic({ containDish }) {
     });
   }, [containDish.imageURL]);
   return (
-    <div>
+    <div className="dish-pic">
       <img src={dishImgURL}></img>
-      <h3>{containDish.name}</h3>
+      <p>{containDish.name}</p>
     </div>
   );
 }

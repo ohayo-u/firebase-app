@@ -1,93 +1,14 @@
-import { useEffect, useState } from "react";
-import Select from "react-select";
+import { useState } from "react";
 import { db, storage } from "../firebase";
-import { collection, getDocs, addDoc, query, where } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
+import { FoodSelect } from "./FoodSelect";
 
 export function RegisterModal({ setIsModalOpen, user }) {
-  const [vegiOptions, setVegiOptions] = useState([]);
-  const [meatOptions, setMeatOptions] = useState([]);
-  const [fishOptions, setFishOptions] = useState([]);
-  const [otherOptions, setOtherOptions] = useState([]);
   const [displayOptions, setDisplayOptions] = useState([]);
   const [image, setImage] = useState();
   const [foodlist, setFoodlist] = useState([]);
   const [dishName, setDishName] = useState("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const vegitablesCollectionRef = query(
-          collection(db, "food"),
-          where("group", "==", "vegitables")
-        );
-        getDocs(vegitablesCollectionRef).then((querySnapshot) => {
-          setVegiOptions(
-            querySnapshot.docs.map((doc) => ({
-              value: doc.id,
-              label: doc.data().name,
-            }))
-          );
-        });
-        const meatCollectionRef = query(
-          collection(db, "food"),
-          where("group", "==", "meat")
-        );
-        getDocs(meatCollectionRef).then((querySnapshot) => {
-          setMeatOptions(
-            querySnapshot.docs.map((doc) => ({
-              value: doc.id,
-              label: doc.data().name,
-            }))
-          );
-        });
-        const fishCollectionRef = query(
-          collection(db, "food"),
-          where("group", "==", "fish")
-        );
-        getDocs(fishCollectionRef).then((querySnapshot) => {
-          setFishOptions(
-            querySnapshot.docs.map((doc) => ({
-              value: doc.id,
-              label: doc.data().name,
-            }))
-          );
-        });
-        const otherCollectionRef = query(
-          collection(db, "food"),
-          where("group", "==", "others")
-        );
-        getDocs(otherCollectionRef).then((querySnapshot) => {
-          setOtherOptions(
-            querySnapshot.docs.map((doc) => ({
-              value: doc.id,
-              label: doc.data().name,
-            }))
-          );
-        });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const groupedOptions = [
-    { label: "野菜", options: vegiOptions },
-    { label: "肉", options: meatOptions },
-    { label: "魚", options: fishOptions },
-    { label: "その他", options: otherOptions },
-  ];
-
-  const optionChange = (selectedOptions) => {
-    setDisplayOptions(selectedOptions);
-    const selectedFood = [];
-    selectedOptions.forEach((selectedOption) => {
-      selectedFood.push(selectedOption.value);
-    });
-    setFoodlist(selectedFood);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -121,8 +42,11 @@ export function RegisterModal({ setIsModalOpen, user }) {
   return (
     <>
       <div className="modal" onClick={() => setIsModalOpen(false)}></div>
-      <div className="modal-inner">
+      <div className="modal-inner" id="form_modal">
         <form onSubmit={handleSubmit}>
+          {/* <ImageUpploader 
+          setImage={setImage}
+          /> */}
           <input
             accept=".png, .jpg, .jpeg"
             type="file"
@@ -135,16 +59,12 @@ export function RegisterModal({ setIsModalOpen, user }) {
             type="text"
             value={dishName}
           ></input>
-          <div className="food-select">
-            <h3>使った食材</h3>
-            <Select
-              options={groupedOptions}
-              isMulti
-              id="select_list"
-              value={displayOptions}
-              onChange={optionChange}
-            />
-          </div>
+          <FoodSelect
+            displayOptions={displayOptions}
+            setDisplayOptions={setDisplayOptions}
+            setFoodlist={setFoodlist}
+            isModify={false}
+          />
           <button className="save-btn">保存</button>
         </form>
         <button

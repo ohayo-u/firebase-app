@@ -27,12 +27,12 @@ export function Dish({ dish, user }) {
   ) : null;
 
   return (
-    <div className="dish-wrapper">
+    <>
       {dishModal}
       <div className="dish" onClick={() => setIsDishModalOpen(true)}>
         <img src={imgURL ? imgURL : undefined} />
         <h3>{dish.name}</h3>
       </div>
-    </div>
+    </>
   );
 }

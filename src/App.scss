@@ -12,8 +12,13 @@ body {
   height: 2000px; //中身スカスカだからとりあえず長くした
 }
 
+* {
+  box-sizing: border-box;
+}
+
 img {
   max-width: 100%;
+  object-fit: cover;
 }
 
 a {
@@ -125,14 +130,12 @@ header {
 .food-list {
   display: flex;
   flex-wrap: wrap;
-  img {
-    width: 150px;
-  }
 }
 
 .food {
+  width: 16%;
+  padding: 1% 3%;
   text-align: center;
-  margin-right: 80px;
   cursor: pointer;
 }
 
@@ -148,22 +151,17 @@ header {
 .dish-list {
   display: flex;
   flex-wrap: wrap;
-  li {
-    padding: 10px;
-    font-size: 20px;
-  }
-}
-
-.dish-wrapper {
-  margin: 20px;
-  padding: 0 20px;
-  img {
-    width: 300px;
-  }
+  padding: 0;
 }
 
 .dish {
   cursor: pointer;
+  width: 25%;
+  padding: 0 20px;
+  img {
+    width: 280px;
+    height: 200px;
+  }
 }
 
 // modal
@@ -176,20 +174,20 @@ header {
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 10;
 }
-
 .modal-inner {
   position: relative;
   position: fixed;
   z-index: 11;
-  top: 100px;
+  top: 50px;
+  bottom: 50px;
   left: 0;
   right: 0;
   margin: auto;
-  width: 800px;
+  width: 1000px;
   background-color: $base;
   border-radius: 20px;
   padding: 50px;
-  text-align: center;
+  overflow: scroll;
   input {
     background-color: $base;
     border: none;
@@ -198,9 +196,27 @@ header {
     font-size: 24px;
   }
 }
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  color: $text;
+  background-color: $main;
+  text-align: center;
+  font-size: 30px;
+}
 
-// register-modal
-
+// form-modal
+#form_modal {
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+}
 .food-select {
   display: flex;
   justify-content: center;
@@ -213,27 +229,13 @@ header {
   }
 }
 
-.modal-close-btn {
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: none;
-  color: $text;
-  background-color: $main;
-  text-align: center;
-  font-size: 30px;
-}
-
 .save-btn {
   padding: 10px 30px;
   color: $text;
-  background-color: $accent;
   border-radius: 5px;
   border: none;
-  margin-top: 30px;
+  width: 100px;
+  margin: 30px auto;
 }
 
 // food-modal
@@ -242,19 +244,41 @@ header {
 }
 .food-info {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  text-align: center;
   img {
     width: 300px;
   }
 }
 
+.dish-pic {
+  padding: 15px;
+  width: 20%;
+  text-align: center;
+  font-size: 16px;
+  img {
+    width: 150px;
+    height: 100px;
+  }
+}
+
 // dish-modal
+.dish-info {
+  text-align: center;
+  img {
+    width: 400px;
+    height: 300px;
+  }
+}
 .del-and-mod-btn {
   position: absolute;
-  top: 40px;
+  top: 80px;
   right: 40px;
   display: flex;
   flex-direction: column;
+}
+.modal-food-list {
+  display: flex;
 }
 
 .delete-btn,
