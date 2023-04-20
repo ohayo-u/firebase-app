@@ -3,6 +3,7 @@ import { db, storage } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { deleteObject, ref, uploadBytes } from "firebase/storage";
 import { FoodSelect } from "./FoodSelect";
+import { ImageUploader } from "./ImageUploader";
 
 export function ModifyModal({ setIsModifyModalOpen, user, defaultDish }) {
   const [displayOptions, setDisplayOptions] = useState([]);
@@ -46,11 +47,12 @@ export function ModifyModal({ setIsModifyModalOpen, user, defaultDish }) {
       <div className="modal" onClick={() => setIsModifyModalOpen(false)}></div>
       <div className="modal-inner" id="form_modal">
         <form onSubmit={handleSubmit}>
-          <input
+          <ImageUploader setImage={setImage} />
+          {/* <input
             accept=".png, .jpg, .jpeg"
             type="file"
             onChange={(e) => setImage(e.target.files[0])}
-          ></input>
+          ></input> */}
           <input
             name="dishName"
             onChange={(e) => setDishName(e.target.value)}

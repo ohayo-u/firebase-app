@@ -48,6 +48,9 @@ button {
     cursor: pointer;
   }
 }
+input[type="file"] {
+  display: none;
+}
 
 // header
 header {
@@ -188,13 +191,6 @@ header {
   border-radius: 20px;
   padding: 50px;
   overflow: scroll;
-  input {
-    background-color: $base;
-    border: none;
-    border-bottom: #3f3f3a solid 1px;
-    padding: 5px;
-    font-size: 24px;
-  }
 }
 .modal-close-btn {
   position: absolute;
@@ -210,11 +206,25 @@ header {
   font-size: 30px;
 }
 
+.modal-dish-img {
+  width: 400px;
+  height: 300px;
+}
+
 // form-modal
 #form_modal {
   form {
     display: flex;
     flex-direction: column;
+  }
+  input {
+    width: 300px;
+    margin: 10px auto;
+    background-color: $base;
+    border: none;
+    border-bottom: #3f3f3a solid 1px;
+    padding: 10px;
+    font-size: 20px;
   }
 }
 .food-select {
@@ -229,13 +239,31 @@ header {
   }
 }
 
+#image_uploader {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
 .save-btn {
   padding: 10px 30px;
   color: $text;
   border-radius: 5px;
   border: none;
   width: 100px;
-  margin: 30px auto;
+  margin: 5px auto;
+}
+#input_label {
+  margin: 5px auto;
+  width: 120px;
+  font-size: 14px;
+  padding: 8px 10px;
+  color: $text;
+  text-align: center;
+  background-color: $base;
+  border: 1px solid $text;
+  border-radius: 14px;
+  cursor: pointer;
 }
 
 // food-modal
@@ -265,10 +293,6 @@ header {
 // dish-modal
 .dish-info {
   text-align: center;
-  img {
-    width: 400px;
-    height: 300px;
-  }
 }
 .del-and-mod-btn {
   position: absolute;

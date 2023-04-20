@@ -5,7 +5,7 @@ import { storage } from "../firebase";
 
 export function Dish({ dish, user }) {
   const [isDishModalOpen, setIsDishModalOpen] = useState(false);
-  const [imgURL, setImgURL] = useState(false);
+  const [imgURL, setImgURL] = useState();
 
   useEffect(() => {
     const imgPathRef = ref(

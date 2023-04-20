@@ -3,6 +3,7 @@ import { db, storage } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 import { FoodSelect } from "./FoodSelect";
+import { ImageUploader } from "./ImageUploader";
 
 export function RegisterModal({ setIsModalOpen, user }) {
   const [displayOptions, setDisplayOptions] = useState([]);
@@ -44,14 +45,7 @@ export function RegisterModal({ setIsModalOpen, user }) {
       <div className="modal" onClick={() => setIsModalOpen(false)}></div>
       <div className="modal-inner" id="form_modal">
         <form onSubmit={handleSubmit}>
-          {/* <ImageUpploader 
-          setImage={setImage}
-          /> */}
-          <input
-            accept=".png, .jpg, .jpeg"
-            type="file"
-            onChange={(e) => setImage(e.target.files[0])}
-          ></input>
+          <ImageUploader setImage={setImage} />
           <input
             name="dishName"
             onChange={(e) => setDishName(e.target.value)}
