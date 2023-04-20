@@ -10,7 +10,7 @@ export function FoodSelect({
   isModify,
   defaultDish,
 }) {
-  const [vegiOptions, setVegiOptions] = useState([]);
+  const [vegeOptions, setVegeOptions] = useState([]);
   const [fruitsOptions, setFruitsOptions] = useState([]);
   const [meatOptions, setMeatOptions] = useState([]);
   const [fishOptions, setFishOptions] = useState([]);
@@ -19,12 +19,12 @@ export function FoodSelect({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const vegitablesCollectionRef = query(
+        const vegetablesCollectionRef = query(
           collection(db, "food"),
-          where("group", "==", "vegitables")
+          where("group", "==", "vegetables")
         );
-        getDocs(vegitablesCollectionRef).then((querySnapshot) => {
-          setVegiOptions(
+        getDocs(vegetablesCollectionRef).then((querySnapshot) => {
+          setVegeOptions(
             querySnapshot.docs.map((doc) => ({
               value: doc.id,
               label: doc.data().name,
@@ -88,7 +88,7 @@ export function FoodSelect({
   }, []);
 
   const groupedOptions = [
-    { label: "野菜", options: vegiOptions },
+    { label: "野菜", options: vegeOptions },
     { label: "果物", options: fruitsOptions },
     { label: "肉", options: meatOptions },
     { label: "魚", options: fishOptions },
@@ -98,7 +98,7 @@ export function FoodSelect({
   useEffect(() => {
     if (isModify) {
       const allOptions = [
-        ...vegiOptions,
+        ...vegeOptions,
         ...fruitsOptions,
         ...meatOptions,
         ...fishOptions,
@@ -112,7 +112,7 @@ export function FoodSelect({
 
       setDisplayOptions(defaultOptions);
     }
-  }, [vegiOptions, fruitsOptions, meatOptions, fishOptions, otherOptions]);
+  }, [vegeOptions, fruitsOptions, meatOptions, fishOptions, otherOptions]);
 
   const optionChange = (selectedOptions) => {
     setDisplayOptions(selectedOptions);
