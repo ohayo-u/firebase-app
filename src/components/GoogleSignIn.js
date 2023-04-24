@@ -12,7 +12,6 @@ export function GoogleSignIn() {
 
       if (!docSnap.exists()) {
         await setDoc(userDocRef, {
-          name: user.displayName,
           email: user.email,
         });
       }
