@@ -51,6 +51,23 @@ button {
 input[type="file"] {
   display: none;
 }
+// login
+.login {
+  text-align: center;
+}
+#logo_img {
+  width: 1200px;
+}
+.sign-in-buttons {
+  button {
+    padding: 0 40px;
+    border-radius: 30px;
+    background-color: #f94439;
+  }
+  p {
+    font-size: 20px;
+  }
+}
 
 // header
 header {
@@ -91,25 +108,6 @@ header {
   padding: 5px 15px;
   border-radius: 15px;
   font-size: 16px;
-}
-
-// login
-.login {
-  text-align: center;
-  h1 {
-    font-size: 200px;
-  }
-}
-
-.sign-in-buttons {
-  button {
-    padding: 0 40px;
-    border-radius: 30px;
-    background-color: #f94439;
-  }
-  p {
-    font-size: 20px;
-  }
 }
 
 // main

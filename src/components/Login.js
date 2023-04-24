@@ -3,6 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 import { GoogleSignIn } from "./GoogleSignIn";
 import { Mypage } from "./Mypage";
+import logo2400 from "../images/logo2400.png";
 
 export function Login() {
   const [user, setUser] = useState("");
@@ -23,7 +24,7 @@ export function Login() {
             <Mypage />
           ) : (
             <div className="login">
-              <h1>MOG</h1>
+              <img src={logo2400} id="logo_img" />
               <div className="sign-in-buttons">
                 <GoogleSignIn />
                 {/* <TwitterSignIn /> */}

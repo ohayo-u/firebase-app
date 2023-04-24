@@ -2,7 +2,6 @@ import { useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import logo from "../images/logo.png";
 
 export function Header({ setIsModalOpen, user }) {
   const [visible, setVisible] = useState(false);
@@ -15,9 +14,7 @@ export function Header({ setIsModalOpen, user }) {
 
   return (
     <header>
-      <div className="header-logo">
-        <img src={logo} />
-      </div>
+      <div className="header-logo"></div>
       <nav>
         <ul className="menu">
           <li>
