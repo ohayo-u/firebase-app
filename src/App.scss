@@ -60,9 +60,11 @@ input[type="file"] {
 }
 .sign-in-buttons {
   button {
-    padding: 0 40px;
+    margin: 15px;
+    padding: 0 30px;
     border-radius: 30px;
-    background-color: #f94439;
+    background-color: $accent;
+    color: $text;
   }
   p {
     font-size: 20px;
@@ -108,6 +110,14 @@ header {
   padding: 5px 15px;
   border-radius: 15px;
   font-size: 16px;
+}
+
+#google_sign_in {
+  border-radius: 15px;
+  margin-left: 20px;
+  padding: 5px 15px;
+  background-color: #fff;
+  color: $text;
 }
 
 // main

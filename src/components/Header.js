@@ -1,16 +1,12 @@
-import { useState } from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { GoogleMigration } from "./GoogleMigration";
+import { AccountInfo } from "./AccountInfo";
 
 export function Header({ setIsModalOpen, user }) {
-  const [visible, setVisible] = useState(false);
-  const navigate = useNavigate();
-
-  const logout = async () => {
-    await signOut(auth);
-    navigate("/login/");
-  };
+  const accountInfoOrSignIn = user.isAnonymous ? (
+    <GoogleMigration user={user} />
+  ) : (
+    <AccountInfo user={user} />
+  );
 
   return (
     <header>
@@ -28,16 +24,7 @@ export function Header({ setIsModalOpen, user }) {
               料理の追加
             </button>
           </li>
-          <li id="account">
-            <img src={user?.photoURL} onClick={() => setVisible(!visible)} />
-            <button
-              className="logout"
-              onClick={logout}
-              style={{ visibility: visible ? "visible" : "hidden" }}
-            >
-              ログアウト
-            </button>
-          </li>
+          {accountInfoOrSignIn}
         </ul>
       </nav>
     </header>
