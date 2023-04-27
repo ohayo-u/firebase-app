@@ -74,7 +74,7 @@ input[type="file"] {
 // header
 header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 20px;
   li {
     display: flex;
@@ -118,6 +118,14 @@ header {
   padding: 5px 15px;
   background-color: #fff;
   color: $text;
+}
+
+#to_login_page {
+  padding: 5px 15px;
+  background-color: $base;
+  color: $text;
+  border-radius: 15px;
+  border: $text 1px solid;
 }
 
 // main
