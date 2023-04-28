@@ -5,15 +5,17 @@ import { linkWithPopup } from "firebase/auth";
 export function GoogleMigration() {
   const signInWithGoogle = () => {
     linkWithPopup(auth.currentUser, provider)
-      .then((result) => {
+      .then(async (result) => {
+        // linkWithPopupはonAuthStateChangedのトリガーにならないため、リロードさせているがもっといいやり方あるかも
         const user = result.user;
         const googleData = user.providerData.find((data) => {
-          return data.providerId == "google.com";
+          return data.providerId === "google.com";
         });
         const photoURL = googleData.photoURL;
-        updateProfile(user, {
+        await updateProfile(user, {
           photoURL: photoURL,
         });
+        window.location.reload();
       })
       .catch((error) => {
         alert("サインインに失敗しました");

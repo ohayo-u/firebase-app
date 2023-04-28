@@ -1,19 +1,16 @@
 import { GoogleMigration } from "./GoogleMigration";
 import { AccountInfo } from "./AccountInfo";
-import { useEffect, useState } from "react";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 
 export function Header({ setIsModalOpen, user }) {
-  const [accountInfoOrSignIn, setAccountInfoOrSignIn] = useState();
-  // なぜか匿名ログインからgoogleログインに切り替えてもuseEffectが動かないので要修正
-  useEffect(() => {
-    setAccountInfoOrSignIn(
-      user.isAnonymous ? <GoogleMigration /> : <AccountInfo user={user} />
-    );
-  }, [user.isAnonymous]);
-
+  // 匿名ログインからgoogleログインに切り替えても表示が切り替わらないので要修正
+  const accountInfoOrGoogleMigration = user.isAnonymous ? (
+    <GoogleMigration />
+  ) : (
+    <AccountInfo user={user} />
+  );
   const navigate = useNavigate();
 
   const logout = async () => {
@@ -44,7 +41,7 @@ export function Header({ setIsModalOpen, user }) {
               料理の追加
             </button>
           </li>
-          {accountInfoOrSignIn}
+          {accountInfoOrGoogleMigration}
         </ul>
       </nav>
     </header>
