@@ -9,8 +9,6 @@
 ![玉ねぎ料理をたくさん登録している状態](https://user-images.githubusercontent.com/124668307/235273525-2cdc64e3-b3c5-4444-9228-8f6365decd20.png)
 その食材を使った料理を作れば作るほど、食材との仲良し度が上がっていきます！
 
-スマホからでもご利用いただけます。
-
 ## 機能一覧
 
 - ログイン機能(firebase authentication)
