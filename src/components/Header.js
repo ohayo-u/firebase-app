@@ -21,12 +21,8 @@ export function Header({ setIsModalOpen, user }) {
     <header>
       <nav>
         <ul className="menu">
-          <li>
-            <button
-              style={{ visibility: user.isAnonymous ? "visible" : "hidden" }}
-              onClick={logout}
-              id="to_login_page"
-            >
+          <li style={{ visibility: user.isAnonymous ? "visible" : "hidden" }}>
+            <button onClick={logout} id="to_login_page">
               ログイン画面へ
             </button>
           </li>
@@ -36,10 +32,8 @@ export function Header({ setIsModalOpen, user }) {
           <li>
             <a href="#dish-index">作った料理</a>
           </li>
-          <li>
-            <button id="add" onClick={() => setIsModalOpen(true)}>
-              料理の追加
-            </button>
+          <li id="add">
+            <button onClick={() => setIsModalOpen(true)}>料理の追加</button>
           </li>
           {accountInfoOrGoogleMigration}
         </ul>

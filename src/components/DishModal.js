@@ -55,7 +55,7 @@ export function DishModal({ dish, user, setIsDishModalOpen, imgURL }) {
           <img src={imgURL ? imgURL : undefined} className="modal-dish-img" />
           <h1>{dish.name}</h1>
         </div>
-        <h3>この料理で使った食材</h3>
+        <h3 className="list-title">この料理で使った食材</h3>
         <ul className="modal-food-list">
           {usedFood.map((food) => (
             <Food key={food.id} food={food} user={user} />

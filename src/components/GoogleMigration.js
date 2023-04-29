@@ -23,7 +23,7 @@ export function GoogleMigration() {
   };
   return (
     <button id="google_sign_in" onClick={signInWithGoogle}>
-      Googleでアカウント作成
+      Googleサインイン
     </button>
   );
 }

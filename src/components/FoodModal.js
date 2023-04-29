@@ -21,7 +21,7 @@ export function FoodModal({
             <img src={nakayoshiImg} id="nakayoshi_heart"></img>
           </div>
         </div>
-        <h3>今までにつくった{food.name}料理</h3>
+        <h3 className="list-title">今までに作った{food.name}料理</h3>
         <ul className="dish-list">
           {containDishList.map((containDish) => (
             <DishPic key={containDish.id} containDish={containDish} />
