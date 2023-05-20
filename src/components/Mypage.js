@@ -63,10 +63,18 @@ export function Mypage() {
           ) : (
             <>
               <Header setIsModalOpen={setIsModalOpen} user={user} />
-              <div className="main">
+              <main>
                 <div className="container" id="food-index">
                   <h3 className="section-title">あなたと仲良しの食材</h3>
-                  <div className="food-list">
+                  <div
+                    className="food-list"
+                    style={{
+                      display: "grid",
+                      gridGap: "3rem",
+                      gridTemplateColumns:
+                        "repeat(auto-fit, minmax(100px, 1fr))",
+                    }}
+                  >
                     {friendFoodList.map((friendFood) => (
                       <Food key={friendFood.id} food={friendFood} user={user} />
                     ))}
@@ -101,7 +109,7 @@ export function Mypage() {
                   onClick={() => setIsModalOpen(true)}
                 />
                 {modal}
-              </div>
+              </main>
             </>
           )}
         </>
