@@ -22,9 +22,20 @@ export function ImageUploader({ setImage }) {
   };
 
   return (
-    <div id="image_uploader">
+    <div style={{ display: "flex", flexDirection: "column", margin: "0 auto" }}>
       {imgPreview && <img src={imgPreview} className="modal-dish-img" />}
-      <label id="input_label">
+      <label
+        id="input_label"
+        style={{
+          margin: "5px auto",
+          width: "120px",
+          fontSize: "14px",
+          padding: "8px 10px",
+          textAlign: "center",
+          borderRadius: "14px",
+          cursor: "pointer",
+        }}
+      >
         写真を選択
         <input accept="image/*" type="file" onChange={onFileChange}></input>
       </label>

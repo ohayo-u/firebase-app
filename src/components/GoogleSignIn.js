@@ -21,7 +21,7 @@ export function GoogleSignIn() {
   };
 
   return (
-    <button onClick={signInWithGoogle}>
+    <button className="sign-in-button" onClick={signInWithGoogle}>
       <p>Googleでサインイン</p>
     </button>
   );

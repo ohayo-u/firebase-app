@@ -51,33 +51,32 @@ export function DishModal({ dish, user, setIsDishModalOpen, imgURL }) {
     <>
       <div className="modal" onClick={() => setIsDishModalOpen(false)}></div>
       <div className="modal-inner">
-        <div className="dish-info">
+        <div style={{ textAlign: "center" }}>
           <img src={imgURL ? imgURL : undefined} className="modal-dish-img" />
           <h1>{dish.name}</h1>
         </div>
         <h3 className="list-title">この料理で使った食材</h3>
-        <ul className="modal-food-list">
+        <ul style={{ display: "flex" }}>
           {usedFood.map((food) => (
             <Food key={food.id} food={food} user={user} />
           ))}
         </ul>
-        <div className="del-and-mod-btn">
-          <button className="delete-btn" onClick={() => deleteDish()}>
+        <div
+          style={{
+            position: "absolute",
+            top: "80px",
+            right: "40px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <button id="delete_btn" onClick={() => deleteDish()}>
             削除
           </button>
-          <button
-            className="modify-btn"
-            onClick={() => setIsModifyModalOpen(true)}
-          >
+          <button id="modify_btn" onClick={() => setIsModifyModalOpen(true)}>
             修正
           </button>
         </div>
-        <button
-          className="modal-close-btn"
-          onClick={() => setIsDishModalOpen(false)}
-        >
-          ×
-        </button>
       </div>
       {modal}
     </>

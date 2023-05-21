@@ -15,7 +15,7 @@ export function AnonymousSignIn() {
   };
 
   return (
-    <button onClick={anonymousSignIn}>
+    <button className="sign-in-button" onClick={anonymousSignIn}>
       <p>サインインせず使う</p>
     </button>
   );

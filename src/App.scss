@@ -42,9 +42,12 @@ li {
   padding: 5px 8px;
   display: inline-block;
 }
+p,
+button {
+  color: $text;
+}
 
 button {
-  color: $base;
   background-color: $accent;
   border: $accent;
   &:hover {
@@ -55,30 +58,16 @@ input[type="file"] {
   display: none;
 }
 // login
-.login {
-  text-align: center;
-}
-#logo_img {
-  width: 1200px;
-}
-.sign-in-buttons {
-  button {
-    margin: 15px;
-    padding: 0 30px;
-    border-radius: 30px;
-    background-color: $accent;
-    color: $text;
-  }
-  p {
-    font-size: 15px;
-  }
+.sign-in-button {
+  margin: 15px;
+  padding: 0 30px;
+  border-radius: 30px;
+  background-color: $accent;
+  color: $text;
 }
 
 // header
 header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px;
   li {
     margin: 10px;
     display: flex;
@@ -86,98 +75,10 @@ header {
   }
 }
 
-.logout {
-  position: absolute;
-  bottom: -10px;
-  left: -10px;
-  font-size: 3px;
-}
-
-.menu {
-  display: flex;
-  justify-content: space-between;
-}
-
-#account {
-  position: relative;
-  img {
-    width: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-}
-
-#add {
-  button {
-    padding: 5px 15px;
-    border-radius: 15px;
-    font-size: 16px;
-  }
-}
-
-#google_sign_in {
-  border-radius: 15px;
-  padding: 5px 15px;
-  background-color: #fff;
-  color: $text;
-}
-
 #to_login_page {
-  padding: 5px 15px;
   background-color: $base;
   color: $text;
-  border-radius: 15px;
   border: $text 1px solid;
-}
-
-// main
-#fixed-add-btn {
-  position: fixed;
-  width: 200px;
-  bottom: 50px;
-  right: 50px;
-  z-index: 9;
-  cursor: pointer;
-}
-
-.add-btn {
-  font-size: 24px;
-  text-align: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-left: 20px;
-}
-
-.food {
-  text-align: center;
-  cursor: pointer;
-}
-
-.title-and-btn {
-  display: flex;
-  align-items: center;
-  img {
-    width: 40px;
-    margin-left: 20px;
-  }
-}
-
-.dish-list {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-}
-
-.dish {
-  cursor: pointer;
-  flex: 0 1 400px;
-
-  padding: 0 20px;
-  img {
-    width: 280px;
-    height: 200px;
-  }
 }
 
 // modal
@@ -199,25 +100,11 @@ header {
   left: 0;
   right: 0;
   margin: auto;
-  width: max(400px, 80%);
-
+  width: max(400px, 65%);
   background-color: $base;
   border-radius: 20px;
   padding: 50px;
   overflow: scroll;
-}
-.modal-close-btn {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: none;
-  color: $text;
-  background-color: $main;
-  text-align: center;
-  font-size: 30px;
 }
 
 .modal-dish-img {
@@ -226,7 +113,7 @@ header {
 }
 
 // form-modal
-#form_modal {
+.form-modal {
   form {
     display: flex;
     flex-direction: column;
@@ -241,23 +128,6 @@ header {
     font-size: 20px;
   }
 }
-.food-select {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  h3 {
-    padding-right: 20px;
-  }
-  #select_list {
-    width: 300px;
-  }
-}
-
-#image_uploader {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-}
 
 .save-btn {
   padding: 10px 30px;
@@ -268,56 +138,14 @@ header {
   margin: 5px auto;
 }
 #input_label {
-  margin: 5px auto;
-  width: 120px;
-  font-size: 14px;
-  padding: 8px 10px;
   color: $text;
-  text-align: center;
   background-color: $base;
   border: 1px solid $text;
-  border-radius: 14px;
-  cursor: pointer;
-}
-
-// food-modal
-.food-info {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  img {
-    width: 300px;
-  }
-}
-
-.dish-pic {
-  padding: 15px;
-  width: 20%;
-  text-align: center;
-  font-size: 16px;
-  img {
-    width: 150px;
-    height: 100px;
-  }
 }
 
 // dish-modal
-.dish-info {
-  text-align: center;
-}
-.del-and-mod-btn {
-  position: absolute;
-  top: 80px;
-  right: 40px;
-  display: flex;
-  flex-direction: column;
-}
-.modal-food-list {
-  display: flex;
-}
-
-.delete-btn,
-.modify-btn {
+#delete_btn,
+#modify_btn {
   width: 50px;
   margin: 5px;
   padding: 5px 10px;
@@ -326,115 +154,4 @@ header {
 
 .delete-btn {
   color: $main;
-}
-
-@media (max-width: 600px) {
-  // login
-  #logo_img {
-    margin-top: 100px;
-  }
-  // header
-  .menu {
-    li {
-      margin: 0;
-      width: 22%;
-      font-size: 12px;
-      padding: 0px;
-    }
-  }
-
-  #add {
-    display: none;
-  }
-  #google_sign_in {
-    padding: 5px 10px;
-    font-size: 12px;
-  }
-
-  #to_login_page {
-    padding: 5px 10px;
-    font-size: 12px;
-  }
-  // main
-  #fixed-add-btn {
-    width: 120px;
-  }
-
-  .dish {
-    font-size: 15px;
-    margin-bottom: 12px;
-    width: 100%;
-  }
-  .modal-close-btn {
-    top: 10px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-  }
-
-  .modal-dish-img {
-    margin-top: 30px;
-    width: 240px;
-    height: 150px;
-  }
-  #form_modal {
-    input {
-      width: 200px;
-      font-size: 16px;
-    }
-  }
-  .food-select {
-    margin-top: 20px;
-    flex-direction: column;
-    h3 {
-      font-weight: normal;
-      padding: 0px;
-    }
-    #select_list {
-      width: 200px;
-      font-size: 12px;
-    }
-  }
-
-  #image_uploader {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-  }
-
-  .save-btn {
-    margin: 30px auto;
-  }
-  #input_label {
-    width: 80px;
-    font-size: 10px;
-    padding: 6px 10px;
-  }
-
-  // food-modal
-  .food-info {
-    flex-direction: column;
-    img {
-      width: 300px;
-    }
-  }
-
-  .dish-pic {
-    width: 100%;
-  }
-
-  // dish-modal
-  .dish-info {
-    h1 {
-      font-size: 20px;
-    }
-  }
-  .del-and-mod-btn {
-    top: 8px;
-    left: 20px;
-    flex-direction: row;
-  }
-  .modal-food-list {
-    display: flex;
-  }
 }

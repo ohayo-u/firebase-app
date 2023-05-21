@@ -29,8 +29,18 @@ export function Dish({ dish, user }) {
   return (
     <>
       {dishModal}
-      <div className="dish" onClick={() => setIsDishModalOpen(true)}>
-        <img src={imgURL ? imgURL : undefined} />
+      <div
+        style={{
+          cursor: "pointer",
+          flex: "0 1 400px",
+          padding: "0 20px",
+        }}
+        onClick={() => setIsDishModalOpen(true)}
+      >
+        <img
+          src={imgURL ? imgURL : undefined}
+          style={{ width: "280px", height: "200px" }}
+        />
         <h3>{dish.name}</h3>
       </div>
     </>

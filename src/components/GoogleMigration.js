@@ -22,7 +22,14 @@ export function GoogleMigration() {
       });
   };
   return (
-    <button id="google_sign_in" onClick={signInWithGoogle}>
+    <button
+      style={{
+        borderRadius: "15px",
+        padding: "5px 15px",
+        backgroundColor: "#fff",
+      }}
+      onClick={signInWithGoogle}
+    >
       Googleサインイン
     </button>
   );

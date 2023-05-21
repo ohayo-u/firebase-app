@@ -11,14 +11,7 @@ export function FoodModal({
   return (
     <>
       <div className="modal" onClick={() => setIsModalOpen(false)}></div>
-      <div
-        className="modal-inner"
-        // style={{
-        //   display: "grid",
-        //   gridTemplateColumns: "1fr 1fr",
-        //   gridTemplateRows: "300px 1fr",
-        // }}
-      >
+      <div className="modal-inner">
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           <div style={{ textAlign: "center", flex: "0 1 300px", flexGrow: 1 }}>
             <img src={foodImgURL} style={{ width: "300px" }}></img>
@@ -30,21 +23,14 @@ export function FoodModal({
             <img src={nakayoshiImg} style={{ width: "300px" }}></img>
           </div>
         </div>
-        <div
-        // style={{ gridColumn: "1/3" }}
-        >
+        <div>
           <h3>今までに作った{food.name}料理</h3>
-          <ul className="dish-list">
+          <ul style={{ display: "flex", flexWrap: "wrap", padding: 0 }}>
             {containDishList.map((containDish) => (
               <DishPic key={containDish.id} containDish={containDish} />
             ))}
           </ul>
         </div>
-        {/* <button
-          className="modal-close-btn"
-          onClick={() => setIsModalOpen(false)}
-        > */}
-        {/* ×</button> */}
       </div>
     </>
   );

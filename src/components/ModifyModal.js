@@ -45,14 +45,9 @@ export function ModifyModal({ setIsModifyModalOpen, user, defaultDish }) {
   return (
     <>
       <div className="modal" onClick={() => setIsModifyModalOpen(false)}></div>
-      <div className="modal-inner" id="form_modal">
+      <div className="modal-inner form-modal">
         <form onSubmit={handleSubmit}>
           <ImageUploader setImage={setImage} />
-          {/* <input
-            accept=".png, .jpg, .jpeg"
-            type="file"
-            onChange={(e) => setImage(e.target.files[0])}
-          ></input> */}
           <input
             name="dishName"
             onChange={(e) => setDishName(e.target.value)}
@@ -69,12 +64,6 @@ export function ModifyModal({ setIsModifyModalOpen, user, defaultDish }) {
           />
           <button className="save-btn">保存</button>
         </form>
-        <button
-          className="modal-close-btn"
-          onClick={() => setIsModifyModalOpen(false)}
-        >
-          ×
-        </button>
       </div>
     </>
   );

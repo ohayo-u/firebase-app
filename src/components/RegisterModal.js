@@ -43,7 +43,7 @@ export function RegisterModal({ setIsModalOpen, user }) {
   return (
     <>
       <div className="modal" onClick={() => setIsModalOpen(false)}></div>
-      <div className="modal-inner" id="form_modal">
+      <div className="modal-inner form-modal">
         <form onSubmit={handleSubmit}>
           <ImageUploader setImage={setImage} />
           <input
@@ -61,12 +61,6 @@ export function RegisterModal({ setIsModalOpen, user }) {
           />
           <button className="save-btn">保存</button>
         </form>
-        <button
-          className="modal-close-btn"
-          onClick={() => setIsModalOpen(false)}
-        >
-          ×
-        </button>
       </div>
     </>
   );

@@ -82,16 +82,28 @@ export function Mypage() {
                 </div>
 
                 <div className="container" id="dish-index">
-                  <div className="title-and-btn">
+                  <div
+                    className="title-and-btn"
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
                     <h3 className="section-title">作った料理</h3>
                     <button
-                      className="add-btn"
+                      style={{
+                        fontSize: "24px",
+                        textAlign: "center",
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "50%",
+                        marginSeft: "20px",
+                      }}
                       onClick={() => setIsModalOpen(true)}
                     >
                       +
                     </button>
                   </div>
-                  <div className="dish-list">
+                  <div
+                    style={{ display: "flex", flexWrap: "wrap", padding: 0 }}
+                  >
                     {dishList.map((dish) => (
                       <Dish
                         key={dish.id}
@@ -105,7 +117,14 @@ export function Mypage() {
 
                 <img
                   src={fixed_add_btn}
-                  id="fixed-add-btn"
+                  style={{
+                    position: "fixed",
+                    width: "200px",
+                    bottom: "50px",
+                    right: "50px",
+                    zIndex: 9,
+                    cursor: "pointer",
+                  }}
                   onClick={() => setIsModalOpen(true)}
                 />
                 {modal}

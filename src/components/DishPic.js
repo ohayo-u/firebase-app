@@ -17,8 +17,15 @@ export function DishPic({ containDish }) {
     });
   }, [containDish.imageURL]);
   return (
-    <div className="dish-pic">
-      <img src={dishImgURL}></img>
+    <div
+      style={{
+        padding: "15px",
+        textAlign: "center",
+        fontSize: "16px",
+        flex: "0 1 200px",
+      }}
+    >
+      <img src={dishImgURL} style={{ aspectRatio: "16 / 11" }}></img>
       <p>{containDish.name}</p>
     </div>
   );

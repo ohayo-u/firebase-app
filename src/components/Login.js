@@ -24,9 +24,9 @@ export function Login() {
           {user ? (
             <Mypage />
           ) : (
-            <div className="login">
-              <img src={logo2400} id="logo_img" />
-              <div className="sign-in-buttons">
+            <div style={{ textAlign: "center" }}>
+              <img src={logo2400} style={{ width: "1200px" }} />
+              <div>
                 <GoogleSignIn />
                 <AnonymousSignIn />
               </div>

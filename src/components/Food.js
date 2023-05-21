@@ -75,7 +75,10 @@ export function Food({ food, user }) {
 
   return (
     <>
-      <div className="food" onClick={() => setIsModalOpen(true)}>
+      <div
+        style={{ textAlign: "center", cursor: "pointer" }}
+        onClick={() => setIsModalOpen(true)}
+      >
         <img src={foodImgURL}></img>
         <h3>{food.name}</h3>
         <img src={nakayoshiImg}></img>

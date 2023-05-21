@@ -124,12 +124,17 @@ export function FoodSelect({
   };
 
   return (
-    <div className="food-select">
-      <h3>使った食材</h3>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <h3 style={{ paddingRight: "20px" }}>使った食材</h3>
       <Select
         options={groupedOptions}
         isMulti
-        id="select_list"
         value={displayOptions}
         onChange={optionChange}
       />

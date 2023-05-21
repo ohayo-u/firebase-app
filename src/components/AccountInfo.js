@@ -12,12 +12,21 @@ export function AccountInfo({ user }) {
     navigate("/login/");
   };
   return (
-    <li id="account">
-      <img src={user?.photoURL} onClick={() => setVisible(!visible)} />
+    <li style={{ position: "relative" }}>
+      <img
+        src={user?.photoURL}
+        onClick={() => setVisible(!visible)}
+        style={{ width: "40px", borderRadius: "50%", cursor: "pointer" }}
+      />
       <button
-        className="logout"
+        style={{
+          position: "absolute",
+          bottom: "-10px",
+          left: "-10px",
+          fontSize: "3px",
+          visibility: visible ? "visible" : "hidden",
+        }}
         onClick={logout}
-        style={{ visibility: visible ? "visible" : "hidden" }}
       >
         ログアウト
       </button>
