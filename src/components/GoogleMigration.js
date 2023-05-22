@@ -22,15 +22,18 @@ export function GoogleMigration() {
       });
   };
   return (
-    <button
-      style={{
-        borderRadius: "15px",
-        padding: "5px 15px",
-        backgroundColor: "#fff",
-      }}
-      onClick={signInWithGoogle}
-    >
-      Googleサインイン
-    </button>
+    <li>
+      <button
+        style={{
+          borderRadius: "15px",
+          padding: "5px 15px",
+          fontSize: "16px",
+          backgroundColor: "#fff",
+        }}
+        onClick={signInWithGoogle}
+      >
+        Googleサインイン
+      </button>
+    </li>
   );
 }

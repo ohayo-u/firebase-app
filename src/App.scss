@@ -57,6 +57,7 @@ button {
 input[type="file"] {
   display: none;
 }
+
 // login
 .sign-in-button {
   margin: 15px;
@@ -69,8 +70,9 @@ input[type="file"] {
 // header
 header {
   li {
-    margin: 10px;
+    margin: 6px;
     display: flex;
+    flex: 0 0 auto;
     align-items: center;
   }
 }

@@ -19,18 +19,26 @@ export function Header({ setIsModalOpen, user }) {
   };
   return (
     <header
-      style={{ display: "flex", justifyContent: "flex-end", padding: "20px" }}
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "flex-end",
+        padding: "20px",
+        position: "fixed",
+        top: 0,
+      }}
     >
       <nav>
         <ul
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            flexWrap: "wrap",
+            justifyContent: "space-around",
           }}
         >
           <li
             style={{
-              visibility: user.isAnonymous ? "visible" : "hidden",
+              display: user.isAnonymous ? "inline-flex" : "none",
             }}
           >
             <button

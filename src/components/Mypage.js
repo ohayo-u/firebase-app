@@ -63,11 +63,10 @@ export function Mypage() {
           ) : (
             <>
               <Header setIsModalOpen={setIsModalOpen} user={user} />
-              <main>
-                <div className="container" id="food-index">
+              <main style={{ paddingTop: "130px" }}>
+                <div className="container">
                   <h3 className="section-title">あなたと仲良しの食材</h3>
                   <div
-                    className="food-list"
                     style={{
                       display: "grid",
                       gridGap: "3rem",
