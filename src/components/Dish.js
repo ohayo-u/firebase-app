@@ -30,11 +30,7 @@ export function Dish({ dish, user }) {
     <>
       {dishModal}
       <div
-        style={{
-          cursor: "pointer",
-          flex: "0 1 400px",
-          padding: "0 20px",
-        }}
+        style={{ cursor: "pointer" }}
         onClick={() => setIsDishModalOpen(true)}
       >
         <img

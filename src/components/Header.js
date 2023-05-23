@@ -50,10 +50,10 @@ export function Header({ setIsModalOpen, user }) {
             </button>
           </li>
           <li>
-            <a href="#food-index">仲良し食材</a>
+            <a href="#food_index">仲良し食材</a>
           </li>
           <li>
-            <a href="#dish-index">作った料理</a>
+            <a href="#dish_index">作った料理</a>
           </li>
           <li>
             <button

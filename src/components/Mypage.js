@@ -64,7 +64,7 @@ export function Mypage() {
             <>
               <Header setIsModalOpen={setIsModalOpen} user={user} />
               <main style={{ paddingTop: "130px" }}>
-                <div className="container">
+                <div className="container" id="food_index">
                   <h3 className="section-title">あなたと仲良しの食材</h3>
                   <div
                     style={{
@@ -80,11 +80,8 @@ export function Mypage() {
                   </div>
                 </div>
 
-                <div className="container" id="dish-index">
-                  <div
-                    className="title-and-btn"
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
+                <div className="container" id="dish_index">
+                  <div style={{ display: "flex", alignItems: "center" }}>
                     <h3 className="section-title">作った料理</h3>
                     <button
                       style={{
@@ -101,7 +98,12 @@ export function Mypage() {
                     </button>
                   </div>
                   <div
-                    style={{ display: "flex", flexWrap: "wrap", padding: 0 }}
+                    style={{
+                      display: "grid",
+                      gridGap: "3rem",
+                      gridTemplateColumns:
+                        "repeat(auto-fit, minmax(240px, 1fr))",
+                    }}
                   >
                     {dishList.map((dish) => (
                       <Dish
