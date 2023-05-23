@@ -12,11 +12,13 @@ export function FoodModal({
     <>
       <div className="modal" onClick={() => setIsModalOpen(false)}></div>
       <div className="modal-inner">
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          <div style={{ textAlign: "center", flex: "0 1 300px", flexGrow: 1 }}>
+        <div
+          style={{ display: "flex", flexWrap: "wrap", marginBottom: "40px" }}
+        >
+          <div style={{ textAlign: "center", flex: "1 1 300px" }}>
             <img src={foodImgURL} style={{ width: "300px" }}></img>
           </div>
-          <div style={{ textAlign: "center", flex: "0 1 300px", flexGrow: 1 }}>
+          <div style={{ textAlign: "center", flex: "1 1 300px" }}>
             <h3>あなたと{food.name}は</h3>
             <h1>{relation}</h1>
             <h3>仲良し度</h3>
@@ -25,7 +27,13 @@ export function FoodModal({
         </div>
         <div>
           <h3>今までに作った{food.name}料理</h3>
-          <ul style={{ display: "flex", flexWrap: "wrap", padding: 0 }}>
+          <ul
+            style={{
+              display: "grid",
+              gridGap: "3rem",
+              gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr)",
+            }}
+          >
             {containDishList.map((containDish) => (
               <DishPic key={containDish.id} containDish={containDish} />
             ))}

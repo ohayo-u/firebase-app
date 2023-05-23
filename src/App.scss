@@ -94,7 +94,6 @@ header {
   z-index: 10;
 }
 .modal-inner {
-  position: relative;
   position: fixed;
   z-index: 11;
   top: 50px;
@@ -102,11 +101,11 @@ header {
   left: 0;
   right: 0;
   margin: auto;
-  width: max(400px, 65%);
+  width: max(350px, 65%);
   background-color: $base;
   border-radius: 20px;
   padding: 50px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .modal-dish-img {

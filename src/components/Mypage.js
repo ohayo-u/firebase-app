@@ -71,7 +71,7 @@ export function Mypage() {
                       display: "grid",
                       gridGap: "3rem",
                       gridTemplateColumns:
-                        "repeat(auto-fit, minmax(100px, 1fr))",
+                        "repeat(auto-fill, minmax(100px, 1fr))",
                     }}
                   >
                     {friendFoodList.map((friendFood) => (
@@ -102,7 +102,7 @@ export function Mypage() {
                       display: "grid",
                       gridGap: "3rem",
                       gridTemplateColumns:
-                        "repeat(auto-fit, minmax(240px, 1fr))",
+                        "repeat(auto-fill, minmax(240px, 1fr))",
                     }}
                   >
                     {dishList.map((dish) => (
