@@ -51,23 +51,10 @@ export function DishModal({ dish, user, setIsDishModalOpen, imgURL }) {
     <>
       <div className="modal" onClick={() => setIsDishModalOpen(false)}></div>
       <div className="modal-inner">
-        <div style={{ textAlign: "center" }}>
-          <img src={imgURL ? imgURL : undefined} className="modal-dish-img" />
-          <h1>{dish.name}</h1>
-        </div>
-        <h3 className="list-title">この料理で使った食材</h3>
-        <ul style={{ display: "flex" }}>
-          {usedFood.map((food) => (
-            <Food key={food.id} food={food} user={user} />
-          ))}
-        </ul>
         <div
           style={{
-            position: "absolute",
-            top: "80px",
-            right: "40px",
             display: "flex",
-            flexDirection: "column",
+            justifyContent: "flex-end",
           }}
         >
           <button id="delete_btn" onClick={() => deleteDish()}>
@@ -77,6 +64,22 @@ export function DishModal({ dish, user, setIsDishModalOpen, imgURL }) {
             修正
           </button>
         </div>
+        <div style={{ textAlign: "center", marginBottom: "40px" }}>
+          <img src={imgURL ? imgURL : undefined} className="modal-dish-img" />
+          <h2>{dish.name}</h2>
+        </div>
+        <h3>この料理で使った食材</h3>
+        <ul
+          style={{
+            display: "grid",
+            gridGap: "3rem",
+            gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
+          }}
+        >
+          {usedFood.map((food) => (
+            <Food key={food.id} food={food} user={user} />
+          ))}
+        </ul>
       </div>
       {modal}
     </>

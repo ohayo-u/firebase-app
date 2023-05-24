@@ -109,8 +109,8 @@ header {
 }
 
 .modal-dish-img {
-  width: 400px;
-  height: 300px;
+  width: min(400px, 100%);
+  aspect-ratio: 16/11;
 }
 
 // form-modal
@@ -153,6 +153,6 @@ header {
   border-radius: 5px;
 }
 
-.delete-btn {
+#delete_btn {
   color: $main;
 }
