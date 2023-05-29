@@ -1,10 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import no_image from "../images/no_image.png";
 
-export function ImageUploader({ setImage }) {
-  const [imgPreview, setImgPreview] = useState(no_image);
+interface Props {
+  setImage: any;
+}
 
-  const onFileChange = (e) => {
+export const ImageUploader: React.FC<Props> = (props) => {
+  const [imgPreview, setImgPreview] = useState<any>(no_image);
+
+  const onFileChange = (e: any) => {
     const selectedImage = e.target.files[0];
     const reader = new FileReader();
 
@@ -18,7 +22,7 @@ export function ImageUploader({ setImage }) {
       setImgPreview(no_image);
     }
 
-    setImage(selectedImage);
+    props.setImage(selectedImage);
   };
 
   return (
@@ -37,4 +41,4 @@ export function ImageUploader({ setImage }) {
       </label>
     </div>
   );
-}
+};

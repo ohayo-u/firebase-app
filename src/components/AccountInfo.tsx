@@ -1,10 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
-export function AccountInfo({ user }) {
-  const [visible, setVisible] = useState(false);
+interface Props {
+  user: any;
+}
+
+export const AccountInfo: React.FC<Props> = (props) => {
+  const [visible, setVisible] = useState<any>(false);
   const navigate = useNavigate();
 
   const logout = async () => {
@@ -14,7 +18,7 @@ export function AccountInfo({ user }) {
   return (
     <li style={{ position: "relative" }}>
       <img
-        src={user?.photoURL}
+        src={props.user?.photoURL}
         onClick={() => setVisible(!visible)}
         style={{ width: "40px", borderRadius: "50%", cursor: "pointer" }}
       />
@@ -32,4 +36,4 @@ export function AccountInfo({ user }) {
       </button>
     </li>
   );
-}
+};

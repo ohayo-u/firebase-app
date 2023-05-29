@@ -1,28 +1,33 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { db, storage } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 import { FoodSelect } from "./FoodSelect";
 import { ImageUploader } from "./ImageUploader";
 
-export function RegisterModal({ setIsModalOpen, user }) {
-  const [displayOptions, setDisplayOptions] = useState([]);
-  const [image, setImage] = useState();
-  const [foodlist, setFoodlist] = useState([]);
-  const [dishName, setDishName] = useState("");
+interface Props {
+  setIsModalOpen: any;
+  user: any;
+}
 
-  const handleSubmit = (e) => {
+export const RegisterModal: React.FC<Props> = (props) => {
+  const [displayOptions, setDisplayOptions] = useState<any>([]);
+  const [image, setImage] = useState<any>();
+  const [foodlist, setFoodlist] = useState<any>([]);
+  const [dishName, setDishName] = useState<any>("");
+
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     const dishName = e.target.elements.dishName.value;
 
     const dishListCollectionRef = collection(
       db,
       "users",
-      user.uid,
+      props.user.uid,
       "dish-list"
     );
     if (image) {
-      const imageUrl = `images/dish/${user.uid}/${image.name}`;
+      const imageUrl = `images/dish/${props.user.uid}/${image.name}`;
       const dishImageRef = ref(storage, imageUrl);
       uploadBytes(dishImageRef, image).then(() => {
         addDoc(dishListCollectionRef, {
@@ -37,12 +42,12 @@ export function RegisterModal({ setIsModalOpen, user }) {
         usedFoodId: foodlist,
       });
     }
-    setIsModalOpen(false);
+    props.setIsModalOpen(false);
   };
 
   return (
     <>
-      <div className="modal" onClick={() => setIsModalOpen(false)}></div>
+      <div className="modal" onClick={() => props.setIsModalOpen(false)}></div>
       <div className="modal-inner form-modal">
         <form onSubmit={handleSubmit}>
           <ImageUploader setImage={setImage} />
@@ -58,10 +63,11 @@ export function RegisterModal({ setIsModalOpen, user }) {
             setDisplayOptions={setDisplayOptions}
             setFoodlist={setFoodlist}
             isModify={false}
+            defaultDish={undefined}
           />
           <button className="save-btn">保存</button>
         </form>
       </div>
     </>
   );
-}
+};

@@ -1,5 +1,5 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { db, storage } from "../firebase";
 import { ref, getDownloadURL } from "firebase/storage";
 import heart1 from "../images/heart1.png";
@@ -9,21 +9,26 @@ import heart4 from "../images/heart4.png";
 import heart5 from "../images/heart5.png";
 import { FoodModal } from "./FoodModal";
 
-export function Food({ food, user }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [containDishList, setContainDishList] = useState([]);
-  const [foodImgURL, setFoodImgURL] = useState();
+interface Props {
+  food: any;
+  user: any;
+}
+
+export const Food: React.FC<Props> = (props) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [containDishList, setContainDishList] = useState<any>([]);
+  const [foodImgURL, setFoodImgURL] = useState<any>();
 
   useEffect(() => {
     const dishListCollectionRef = collection(
       db,
       "users",
-      user.uid,
+      props.user.uid,
       "dish-list"
     );
     const containDishDocs = query(
       dishListCollectionRef,
-      where("usedFoodId", "array-contains", food.id)
+      where("usedFoodId", "array-contains", props.food.id)
     );
     const unsub = onSnapshot(containDishDocs, (querySnapshot) => {
       setContainDishList(
@@ -34,7 +39,7 @@ export function Food({ food, user }) {
         }))
       );
     });
-    const imgPathRef = ref(storage, `images/food/${food.id}.png`);
+    const imgPathRef = ref(storage, `images/food/${props.food.id}.png`);
     getDownloadURL(imgPathRef).then((url) => {
       setFoodImgURL(url);
     });
@@ -65,7 +70,7 @@ export function Food({ food, user }) {
   const modal = isModalOpen ? (
     <FoodModal
       setIsModalOpen={setIsModalOpen}
-      food={food}
+      food={props.food}
       relation={relation}
       nakayoshiImg={nakayoshiImg}
       containDishList={containDishList}
@@ -80,10 +85,10 @@ export function Food({ food, user }) {
         onClick={() => setIsModalOpen(true)}
       >
         <img src={foodImgURL}></img>
-        <h3>{food.name}</h3>
+        <h3>{props.food.name}</h3>
         <img src={nakayoshiImg}></img>
       </div>
       {modal}
     </>
   );
-}
+};

@@ -1,28 +1,32 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 
-export function DishPic({ containDish }) {
-  const [dishImgURL, setDishImgURL] = useState();
+interface Props {
+  containDish: any;
+}
+
+export const DishPic: React.FC<Props> = (props) => {
+  const [dishImgURL, setDishImgURL] = useState<any>();
 
   useEffect(() => {
     const imgPathRef = ref(
       storage,
-      containDish.imageURL !== undefined
-        ? containDish.imageURL
+      props.containDish.imageURL !== undefined
+        ? props.containDish.imageURL
         : "images/others/no_image.png"
     );
     getDownloadURL(imgPathRef).then((url) => {
       setDishImgURL(url);
     });
-  }, [containDish.imageURL]);
+  }, [props.containDish.imageURL]);
   return (
     <div>
       <img
         src={dishImgURL}
         style={{ width: "100%", aspectRatio: "16 / 11" }}
       ></img>
-      <p>{containDish.name}</p>
+      <p>{props.containDish.name}</p>
     </div>
   );
-}
+};

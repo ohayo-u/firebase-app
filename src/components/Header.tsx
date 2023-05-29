@@ -3,13 +3,19 @@ import { AccountInfo } from "./AccountInfo";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
+import React from "react";
 
-export function Header({ setIsModalOpen, user }) {
+interface Props {
+  setIsModalOpen: any;
+  user: any;
+}
+
+export const Header: React.FC<Props> = (props) => {
   // 匿名ログインからgoogleログインに切り替えても表示が切り替わらないので要修正
-  const accountInfoOrGoogleMigration = user.isAnonymous ? (
+  const accountInfoOrGoogleMigration = props.user.isAnonymous ? (
     <GoogleMigration />
   ) : (
-    <AccountInfo user={user} />
+    <AccountInfo user={props.user} />
   );
   const navigate = useNavigate();
 
@@ -38,7 +44,7 @@ export function Header({ setIsModalOpen, user }) {
         >
           <li
             style={{
-              display: user.isAnonymous ? "inline-flex" : "none",
+              display: props.user.isAnonymous ? "inline-flex" : "none",
             }}
           >
             <button
@@ -62,7 +68,7 @@ export function Header({ setIsModalOpen, user }) {
                 borderRadius: "15px",
                 fontSize: "16px",
               }}
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => props.setIsModalOpen(true)}
             >
               料理の追加
             </button>
@@ -72,4 +78,4 @@ export function Header({ setIsModalOpen, user }) {
       </nav>
     </header>
   );
-}
+};

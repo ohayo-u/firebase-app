@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { db } from "../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
-export function FoodSelect({
-  displayOptions,
-  setDisplayOptions,
-  setFoodlist,
-  isModify,
-  defaultDish,
-}) {
-  const [vegeOptions, setVegeOptions] = useState([]);
-  const [fruitsOptions, setFruitsOptions] = useState([]);
-  const [meatOptions, setMeatOptions] = useState([]);
-  const [fishOptions, setFishOptions] = useState([]);
-  const [otherOptions, setOtherOptions] = useState([]);
+interface Props {
+  displayOptions: any;
+  setDisplayOptions: any;
+  setFoodlist: any;
+  isModify: boolean;
+  defaultDish: any;
+}
+
+export const FoodSelect: React.FC<Props> = (props) => {
+  const [vegeOptions, setVegeOptions] = useState<any>([]);
+  const [fruitsOptions, setFruitsOptions] = useState<any>([]);
+  const [meatOptions, setMeatOptions] = useState<any>([]);
+  const [fishOptions, setFishOptions] = useState<any>([]);
+  const [otherOptions, setOtherOptions] = useState<any>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,7 +98,7 @@ export function FoodSelect({
   ];
 
   useEffect(() => {
-    if (isModify) {
+    if (props.isModify) {
       const allOptions = [
         ...vegeOptions,
         ...fruitsOptions,
@@ -105,22 +107,22 @@ export function FoodSelect({
         ...otherOptions,
       ];
 
-      const defaultFoodId = defaultDish.usedFoodId;
+      const defaultFoodId = props.defaultDish.usedFoodId;
       const defaultOptions = allOptions.filter((option) =>
         defaultFoodId.includes(option.value)
       );
 
-      setDisplayOptions(defaultOptions);
+      props.setDisplayOptions(defaultOptions);
     }
   }, [vegeOptions, fruitsOptions, meatOptions, fishOptions, otherOptions]);
 
-  const optionChange = (selectedOptions) => {
-    setDisplayOptions(selectedOptions);
-    const selectedFood = [];
-    selectedOptions.forEach((selectedOption) => {
+  const optionChange = (selectedOptions: any) => {
+    props.setDisplayOptions(selectedOptions);
+    const selectedFood: any[] = [];
+    selectedOptions.forEach((selectedOption: any) => {
       selectedFood.push(selectedOption.value);
     });
-    setFoodlist(selectedFood);
+    props.setFoodlist(selectedFood);
   };
 
   return (
@@ -135,9 +137,9 @@ export function FoodSelect({
       <Select
         options={groupedOptions}
         isMulti
-        value={displayOptions}
+        value={props.displayOptions}
         onChange={optionChange}
       />
     </div>
   );
-}
+};

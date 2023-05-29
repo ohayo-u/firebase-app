@@ -1,30 +1,37 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { db, storage } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { deleteObject, ref, uploadBytes } from "firebase/storage";
 import { FoodSelect } from "./FoodSelect";
 import { ImageUploader } from "./ImageUploader";
 
-export function ModifyModal({ setIsModifyModalOpen, user, defaultDish }) {
-  const [displayOptions, setDisplayOptions] = useState([]);
-  const [image, setImage] = useState();
-  const [foodlist, setFoodlist] = useState(defaultDish.usedFoodId);
-  const [dishName, setDishName] = useState(defaultDish.name);
+interface Props {
+  setIsModifyModalOpen: any;
+  user: any;
+  defaultDish: any;
+}
 
-  const handleSubmit = (e) => {
+export const ModifyModal: React.FC<Props> = (props) => {
+  const [displayOptions, setDisplayOptions] = useState<any>([]);
+  const [image, setImage] = useState<any>();
+  const [foodlist, setFoodlist] = useState<any>(props.defaultDish.usedFoodId);
+  const [dishName, setDishName] = useState<any>(props.defaultDish.name);
+
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-    const dishName = e.target.elements.dishName.value;
+    const dishName = e.target!.elements.dishName.value;
 
     const defaultDishDocRef = doc(
       db,
       "users",
-      user.uid,
+      props.user.uid,
       "dish-list",
-      defaultDish.id
+      props.defaultDish.id
     );
-    defaultDish.imageURL && deleteObject(ref(storage, defaultDish.imageURL));
+    props.defaultDish.imageURL &&
+      deleteObject(ref(storage, props.defaultDish.imageURL));
     if (image) {
-      const imageUrl = `images/dish/${user.uid}/${image.name}`;
+      const imageUrl = `images/dish/${props.user.uid}/${image.name}`;
       const dishImageRef = ref(storage, imageUrl);
       uploadBytes(dishImageRef, image).then(() => {
         setDoc(defaultDishDocRef, {
@@ -39,12 +46,15 @@ export function ModifyModal({ setIsModifyModalOpen, user, defaultDish }) {
         usedFoodId: foodlist,
       });
     }
-    setIsModifyModalOpen(false);
+    props.setIsModifyModalOpen(false);
   };
 
   return (
     <>
-      <div className="modal" onClick={() => setIsModifyModalOpen(false)}></div>
+      <div
+        className="modal"
+        onClick={() => props.setIsModifyModalOpen(false)}
+      ></div>
       <div className="modal-inner form-modal">
         <form onSubmit={handleSubmit}>
           <ImageUploader setImage={setImage} />
@@ -60,11 +70,11 @@ export function ModifyModal({ setIsModifyModalOpen, user, defaultDish }) {
             setDisplayOptions={setDisplayOptions}
             setFoodlist={setFoodlist}
             isModify={true}
-            defaultDish={defaultDish}
+            defaultDish={props.defaultDish}
           />
           <button className="save-btn">保存</button>
         </form>
       </div>
     </>
   );
-}
+};

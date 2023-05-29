@@ -1,32 +1,35 @@
+import React from "react";
 import { DishPic } from "./DishPic";
 
-export function FoodModal({
-  setIsModalOpen,
-  food,
-  relation,
-  nakayoshiImg,
-  containDishList,
-  foodImgURL,
-}) {
+interface Props {
+  setIsModalOpen: any;
+  food: any;
+  relation: any;
+  nakayoshiImg: any;
+  containDishList: any;
+  foodImgURL: string;
+}
+
+export const FoodModal: React.FC<Props> = (props) => {
   return (
     <>
-      <div className="modal" onClick={() => setIsModalOpen(false)}></div>
+      <div className="modal" onClick={() => props.setIsModalOpen(false)}></div>
       <div className="modal-inner">
         <div
           style={{ display: "flex", flexWrap: "wrap", marginBottom: "40px" }}
         >
           <div style={{ textAlign: "center", flex: "1 1 300px" }}>
-            <img src={foodImgURL} style={{ width: "300px" }}></img>
+            <img src={props.foodImgURL} style={{ width: "300px" }}></img>
           </div>
           <div style={{ textAlign: "center", flex: "1 1 300px" }}>
-            <h3>あなたと{food.name}は</h3>
-            <h1>{relation}</h1>
+            <h3>あなたと{props.food.name}は</h3>
+            <h1>{props.relation}</h1>
             <h3>仲良し度</h3>
-            <img src={nakayoshiImg} style={{ width: "300px" }}></img>
+            <img src={props.nakayoshiImg} style={{ width: "300px" }}></img>
           </div>
         </div>
         <div>
-          <h3>今までに作った{food.name}料理</h3>
+          <h3>今までに作った{props.food.name}料理</h3>
           <ul
             style={{
               display: "grid",
@@ -34,7 +37,7 @@ export function FoodModal({
               gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr)",
             }}
           >
-            {containDishList.map((containDish) => (
+            {props.containDishList.map((containDish: any) => (
               <DishPic key={containDish.id} containDish={containDish} />
             ))}
           </ul>
@@ -42,4 +45,4 @@ export function FoodModal({
       </div>
     </>
   );
-}
+};

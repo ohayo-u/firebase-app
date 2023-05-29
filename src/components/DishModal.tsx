@@ -1,23 +1,36 @@
 import { deleteDoc, doc, getDoc, onSnapshot } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { db, storage } from "../firebase";
 import { Food } from "./Food";
 import { ModifyModal } from "./ModifyModal";
 import { deleteObject, ref } from "firebase/storage";
 
-export function DishModal({ dish, user, setIsDishModalOpen, imgURL }) {
-  const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
-  const [usedFood, setUsedFood] = useState([]);
-  const dishDocRef = doc(db, "users", user.uid, "dish-list", dish.id);
+interface Props {
+  dish: any;
+  user: any;
+  setIsDishModalOpen: any;
+  imgURL: any;
+}
+
+export const DishModal: React.FC<Props> = (props) => {
+  const [isModifyModalOpen, setIsModifyModalOpen] = useState<any>(false);
+  const [usedFood, setUsedFood] = useState<any>([]);
+  const dishDocRef = doc(
+    db,
+    "users",
+    props.user.uid,
+    "dish-list",
+    props.dish.id
+  );
 
   useEffect(() => {
     const unsub = onSnapshot(dishDocRef, (dishDocSnapshot) => {
-      const usedFoodId = dishDocSnapshot.data().usedFoodId;
+      const usedFoodId = dishDocSnapshot.data()!.usedFoodId;
       Promise.all(
-        usedFoodId.map(async (foodId) => {
+        usedFoodId.map(async (foodId: any) => {
           const usedFoodDocRef = doc(db, "food", foodId);
           const usedFoodDocSnapshot = await getDoc(usedFoodDocRef);
-          return { id: foodId, name: usedFoodDocSnapshot.data().name };
+          return { id: foodId, name: usedFoodDocSnapshot.data()!.name };
         })
       ).then((usedFoodDocs) => setUsedFood(usedFoodDocs));
     });
@@ -26,10 +39,10 @@ export function DishModal({ dish, user, setIsDishModalOpen, imgURL }) {
   }, []);
 
   const deleteDish = () => {
-    setIsDishModalOpen(false);
+    props.setIsDishModalOpen(false);
 
-    if (dish.imageURL !== undefined) {
-      const dishImageRef = ref(storage, dish.imageURL);
+    if (props.dish.imageURL !== undefined) {
+      const dishImageRef = ref(storage, props.dish.imageURL);
       deleteObject(dishImageRef).then(() => {
         deleteDoc(dishDocRef);
       });
@@ -41,15 +54,17 @@ export function DishModal({ dish, user, setIsDishModalOpen, imgURL }) {
   const modal = isModifyModalOpen ? (
     <ModifyModal
       setIsModifyModalOpen={setIsModifyModalOpen}
-      user={user}
-      defaultDish={dish}
-      usedFood={usedFood}
+      user={props.user}
+      defaultDish={props.dish}
     />
   ) : null;
 
   return (
     <>
-      <div className="modal" onClick={() => setIsDishModalOpen(false)}></div>
+      <div
+        className="modal"
+        onClick={() => props.setIsDishModalOpen(false)}
+      ></div>
       <div className="modal-inner">
         <div
           style={{
@@ -65,8 +80,11 @@ export function DishModal({ dish, user, setIsDishModalOpen, imgURL }) {
           </button>
         </div>
         <div style={{ textAlign: "center", marginBottom: "40px" }}>
-          <img src={imgURL ? imgURL : undefined} className="modal-dish-img" />
-          <h2>{dish.name}</h2>
+          <img
+            src={props.imgURL ? props.imgURL : undefined}
+            className="modal-dish-img"
+          />
+          <h2>{props.dish.name}</h2>
         </div>
         <h3>この料理で使った食材</h3>
         <ul
@@ -76,12 +94,12 @@ export function DishModal({ dish, user, setIsDishModalOpen, imgURL }) {
             gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
           }}
         >
-          {usedFood.map((food) => (
-            <Food key={food.id} food={food} user={user} />
+          {usedFood.map((food: any) => (
+            <Food key={food.id} food={food} user={props.user} />
           ))}
         </ul>
       </div>
       {modal}
     </>
   );
-}
+};
