@@ -2,6 +2,7 @@ import { updateProfile } from "firebase/auth";
 import { auth, provider } from "../firebase";
 import { linkWithPopup } from "firebase/auth";
 import React from "react";
+import { redirect } from "react-router-dom";
 
 export const GoogleMigration: React.FC = () => {
   const signInWithGoogle = () => {
@@ -12,14 +13,18 @@ export const GoogleMigration: React.FC = () => {
         const googleData = user.providerData.find((data) => {
           return data.providerId === "google.com";
         });
-        const photoURL = googleData!.photoURL;
+        if (!googleData) {
+          alert("googleアカウントでのサインインに失敗しました");
+          return redirect("login");
+        }
+        const photoURL = googleData.photoURL;
         await updateProfile(user, {
           photoURL: photoURL,
         });
         window.location.reload();
       })
-      .catch((error) => {
-        alert("サインインに失敗しました");
+      .catch(() => {
+        alert("googleアカウントでのサインインに失敗しました");
       });
   };
   return (
