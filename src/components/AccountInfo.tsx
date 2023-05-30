@@ -1,24 +1,23 @@
 import React, { useState } from "react";
-import { signOut } from "firebase/auth";
+import { signOut, User } from "firebase/auth";
 import { auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 interface Props {
-  user: any;
+  user: User;
 }
 
 export const AccountInfo: React.FC<Props> = (props) => {
-  const [visible, setVisible] = useState<any>(false);
-  const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
 
   const logout = async () => {
     await signOut(auth);
-    navigate("/login/");
+    return redirect("/login/");
   };
   return (
     <li style={{ position: "relative" }}>
       <img
-        src={props.user?.photoURL}
+        src={props.user?.photoURL as string | undefined}
         onClick={() => setVisible(!visible)}
         style={{ width: "40px", borderRadius: "50%", cursor: "pointer" }}
       />
