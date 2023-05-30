@@ -1,27 +1,25 @@
 import { GoogleMigration } from "./GoogleMigration";
 import { AccountInfo } from "./AccountInfo";
 import { auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
+import { redirect } from "react-router-dom";
+import { signOut, User } from "firebase/auth";
 import React from "react";
 
 interface Props {
-  setIsModalOpen: any;
-  user: any;
+  setIsModalOpen: (value: React.SetStateAction<boolean>) => void;
+  user: User;
 }
 
 export const Header: React.FC<Props> = (props) => {
-  // 匿名ログインからgoogleログインに切り替えても表示が切り替わらないので要修正
   const accountInfoOrGoogleMigration = props.user.isAnonymous ? (
     <GoogleMigration />
   ) : (
     <AccountInfo user={props.user} />
   );
-  const navigate = useNavigate();
 
   const logout = async () => {
     await signOut(auth);
-    navigate("/login/");
+    return redirect("/login/");
   };
   return (
     <header
