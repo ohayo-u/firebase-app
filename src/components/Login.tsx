@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../firebase";
 import { GoogleSignIn } from "./GoogleSignIn";
 import { AnonymousSignIn } from "./AnonymousSignIn";
@@ -7,8 +7,8 @@ import { Mypage } from "./Mypage";
 import logo2400 from "../images/logo2400.png";
 
 export const Login: React.FC = () => {
-  const [user, setUser] = useState<any>();
-  const [loading, setLoading] = useState<any>();
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {

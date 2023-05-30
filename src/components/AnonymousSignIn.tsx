@@ -3,15 +3,7 @@ import { auth } from "../firebase";
 
 export function AnonymousSignIn() {
   const anonymousSignIn = () => {
-    signInAnonymously(auth)
-      .then(() => {
-        // Signed in..
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ...
-      });
+    signInAnonymously(auth);
   };
 
   return (
