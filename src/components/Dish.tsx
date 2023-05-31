@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { DishModal } from "./DishModal";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../firebase";
+import { DishType } from "../models/dish.model";
+import { User } from "firebase/auth";
 
 interface Props {
-  dish: any;
-  user: any;
+  dish: DishType;
+  user: User;
 }
 
 export const Dish: React.FC<Props> = (props) => {
-  const [isDishModalOpen, setIsDishModalOpen] = useState<any>(false);
-  const [imgURL, setImgURL] = useState<any>();
+  const [isDishModalOpen, setIsDishModalOpen] = useState(false);
+  const [imgURL, setImgURL] = useState<string | undefined>();
 
   useEffect(() => {
     const imgPathRef = ref(
@@ -41,7 +43,7 @@ export const Dish: React.FC<Props> = (props) => {
         onClick={() => setIsDishModalOpen(true)}
       >
         <img
-          src={imgURL ? imgURL : undefined}
+          src={imgURL || undefined}
           style={{ width: "280px", height: "200px" }}
         />
         <h3>{props.dish.name}</h3>

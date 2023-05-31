@@ -4,17 +4,20 @@ import { db, storage } from "../firebase";
 import { Food } from "./Food";
 import { ModifyModal } from "./ModifyModal";
 import { deleteObject, ref } from "firebase/storage";
+import { DishType } from "../models/dish.model";
+import { User } from "firebase/auth";
+import { FoodType } from "../models/food.model";
 
 interface Props {
-  dish: any;
-  user: any;
-  setIsDishModalOpen: any;
-  imgURL: any;
+  dish: DishType;
+  user: User;
+  setIsDishModalOpen: (value: React.SetStateAction<boolean>) => void;
+  imgURL: string | undefined;
 }
 
 export const DishModal: React.FC<Props> = (props) => {
-  const [isModifyModalOpen, setIsModifyModalOpen] = useState<any>(false);
-  const [usedFood, setUsedFood] = useState<any>([]);
+  const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
+  const [usedFood, setUsedFood] = useState<FoodType[]>([]);
   const dishDocRef = doc(
     db,
     "users",
@@ -27,7 +30,7 @@ export const DishModal: React.FC<Props> = (props) => {
     const unsub = onSnapshot(dishDocRef, (dishDocSnapshot) => {
       const usedFoodId = dishDocSnapshot.data()!.usedFoodId;
       Promise.all(
-        usedFoodId.map(async (foodId: any) => {
+        usedFoodId.map(async (foodId: string) => {
           const usedFoodDocRef = doc(db, "food", foodId);
           const usedFoodDocSnapshot = await getDoc(usedFoodDocRef);
           return { id: foodId, name: usedFoodDocSnapshot.data()!.name };
@@ -80,10 +83,7 @@ export const DishModal: React.FC<Props> = (props) => {
           </button>
         </div>
         <div style={{ textAlign: "center", marginBottom: "40px" }}>
-          <img
-            src={props.imgURL ? props.imgURL : undefined}
-            className="modal-dish-img"
-          />
+          <img src={props.imgURL || undefined} className="modal-dish-img" />
           <h2>{props.dish.name}</h2>
         </div>
         <h3>この料理で使った食材</h3>
@@ -94,7 +94,7 @@ export const DishModal: React.FC<Props> = (props) => {
             gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
           }}
         >
-          {usedFood.map((food: any) => (
+          {usedFood.map((food: FoodType) => (
             <Food key={food.id} food={food} user={props.user} />
           ))}
         </ul>
