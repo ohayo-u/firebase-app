@@ -1,12 +1,14 @@
 import React from "react";
 import { DishPic } from "./DishPic";
+import { FoodType } from "../models/food.model";
+import { dishInFM } from "../models/dishInFM.model";
 
 interface Props {
-  setIsModalOpen: any;
-  food: any;
-  relation: any;
-  nakayoshiImg: any;
-  containDishList: any;
+  setIsModalOpen: (value: React.SetStateAction<boolean>) => void;
+  food: FoodType;
+  relation: string;
+  nakayoshiImg: string;
+  dishListInFM: dishInFM[];
   foodImgURL: string;
 }
 
@@ -37,8 +39,8 @@ export const FoodModal: React.FC<Props> = (props) => {
               gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr)",
             }}
           >
-            {props.containDishList.map((containDish: any) => (
-              <DishPic key={containDish.id} containDish={containDish} />
+            {props.dishListInFM.map((dishInFM: dishInFM) => (
+              <DishPic key={dishInFM.id} dishInFM={dishInFM} />
             ))}
           </ul>
         </div>
