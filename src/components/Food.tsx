@@ -8,16 +8,19 @@ import heart3 from "../images/heart3.png";
 import heart4 from "../images/heart4.png";
 import heart5 from "../images/heart5.png";
 import { FoodModal } from "./FoodModal";
+import { FoodType } from "../models/food.model";
+import { User } from "firebase/auth";
+import { dishInFM } from "../models/dishInFM.model";
 
 interface Props {
-  food: any;
-  user: any;
+  food: FoodType;
+  user: User;
 }
 
 export const Food: React.FC<Props> = (props) => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [containDishList, setContainDishList] = useState<any>([]);
-  const [foodImgURL, setFoodImgURL] = useState<any>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dishListInFM, setDishListInFM] = useState<dishInFM[]>([]);
+  const [foodImgURL, setFoodImgURL] = useState<string>("");
 
   useEffect(() => {
     const dishListCollectionRef = collection(
@@ -31,10 +34,10 @@ export const Food: React.FC<Props> = (props) => {
       where("usedFoodId", "array-contains", props.food.id)
     );
     const unsub = onSnapshot(containDishDocs, (querySnapshot) => {
-      setContainDishList(
+      setDishListInFM(
         querySnapshot.docs.map((doc) => ({
-          name: doc.data().name,
-          imageURL: doc.data().imageURL,
+          name: doc.data().name as string,
+          imageURL: doc.data().imageURL as string | undefined,
           id: doc.id,
         }))
       );
@@ -46,9 +49,9 @@ export const Food: React.FC<Props> = (props) => {
     return unsub;
   }, []);
 
-  const dishCount = containDishList.length;
-  let nakayoshiImg;
-  let relation;
+  const dishCount = dishListInFM.length;
+  let nakayoshiImg: string = "";
+  let relation: string = "";
 
   if (dishCount <= 3) {
     nakayoshiImg = heart1;
@@ -73,7 +76,7 @@ export const Food: React.FC<Props> = (props) => {
       food={props.food}
       relation={relation}
       nakayoshiImg={nakayoshiImg}
-      containDishList={containDishList}
+      dishListInFM={dishListInFM}
       foodImgURL={foodImgURL}
     />
   ) : null;
