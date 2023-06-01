@@ -4,22 +4,26 @@ import { doc, setDoc } from "firebase/firestore";
 import { deleteObject, ref, uploadBytes } from "firebase/storage";
 import { FoodSelect } from "./FoodSelect";
 import { ImageUploader } from "./ImageUploader";
+import { User } from "firebase/auth";
+import { DishType } from "../models/dish.model";
+import { CustomedSubmitEvent } from "../models/submitEvent.model";
 
 interface Props {
-  setIsModifyModalOpen: any;
-  user: any;
-  defaultDish: any;
+  setIsModifyModalOpen: (value: React.SetStateAction<boolean>) => void;
+  user: User;
+  defaultDish: DishType;
 }
 
 export const ModifyModal: React.FC<Props> = (props) => {
-  const [displayOptions, setDisplayOptions] = useState<any>([]);
-  const [image, setImage] = useState<any>();
-  const [foodlist, setFoodlist] = useState<any>(props.defaultDish.usedFoodId);
-  const [dishName, setDishName] = useState<any>(props.defaultDish.name);
+  const [image, setImage] = useState<File>();
+  const [foodlist, setFoodlist] = useState<string[]>(
+    props.defaultDish.usedFoodId
+  );
+  const [dishName, setDishName] = useState<string>(props.defaultDish.name);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: CustomedSubmitEvent) => {
     e.preventDefault();
-    const dishName = e.target!.elements.dishName.value;
+    const dishName = e.target.elements.dishName.value;
 
     const defaultDishDocRef = doc(
       db,
@@ -66,8 +70,6 @@ export const ModifyModal: React.FC<Props> = (props) => {
             value={dishName}
           ></input>
           <FoodSelect
-            displayOptions={displayOptions}
-            setDisplayOptions={setDisplayOptions}
             setFoodlist={setFoodlist}
             isModify={true}
             defaultDish={props.defaultDish}
