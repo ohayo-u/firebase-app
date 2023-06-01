@@ -24,67 +24,39 @@ export const FoodSelect: React.FC<Props> = (props) => {
   const [displayOptions, setDisplayOptions] = useState<readonly option[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = () => {
       try {
-        const vegetablesCollectionRef = query(
-          collection(db, "food"),
-          where("group", "==", "vegetables")
-        );
-        getDocs(vegetablesCollectionRef).then((querySnapshot) => {
-          setVegeOptions(
-            querySnapshot.docs.map((doc) => ({
-              value: doc.id,
-              label: doc.data().name,
-            }))
+        const groups: {
+          groupName: string;
+          setFn: (value: option[]) => void;
+        }[] = [
+          { groupName: "vegetables", setFn: setVegeOptions },
+          { groupName: "fruits", setFn: setFruitsOptions },
+          { groupName: "meat", setFn: setMeatOptions },
+          { groupName: "fish", setFn: setFishOptions },
+          { groupName: "others", setFn: setOtherOptions },
+        ];
+
+        const fetchOptionData = (
+          groupName: string,
+          setFn: (value: option[]) => void
+        ) => {
+          const CollectionRef = query(
+            collection(db, "food"),
+            where("group", "==", groupName)
           );
-        });
-        const fruitsCollectionRef = query(
-          collection(db, "food"),
-          where("group", "==", "fruits")
-        );
-        getDocs(fruitsCollectionRef).then((querySnapshot) => {
-          setFruitsOptions(
-            querySnapshot.docs.map((doc) => ({
-              value: doc.id,
-              label: doc.data().name,
-            }))
-          );
-        });
-        const meatCollectionRef = query(
-          collection(db, "food"),
-          where("group", "==", "meat")
-        );
-        getDocs(meatCollectionRef).then((querySnapshot) => {
-          setMeatOptions(
-            querySnapshot.docs.map((doc) => ({
-              value: doc.id,
-              label: doc.data().name,
-            }))
-          );
-        });
-        const fishCollectionRef = query(
-          collection(db, "food"),
-          where("group", "==", "fish")
-        );
-        getDocs(fishCollectionRef).then((querySnapshot) => {
-          setFishOptions(
-            querySnapshot.docs.map((doc) => ({
-              value: doc.id,
-              label: doc.data().name,
-            }))
-          );
-        });
-        const otherCollectionRef = query(
-          collection(db, "food"),
-          where("group", "==", "others")
-        );
-        getDocs(otherCollectionRef).then((querySnapshot) => {
-          setOtherOptions(
-            querySnapshot.docs.map((doc) => ({
-              value: doc.id,
-              label: doc.data().name,
-            }))
-          );
+          getDocs(CollectionRef).then((querySnapshot) => {
+            setFn(
+              querySnapshot.docs.map((doc) => ({
+                value: doc.id,
+                label: doc.data().name,
+              }))
+            );
+          });
+        };
+
+        groups.forEach((group) => {
+          fetchOptionData(group.groupName, group.setFn);
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -94,7 +66,7 @@ export const FoodSelect: React.FC<Props> = (props) => {
     fetchData();
   }, []);
 
-  const groupedOptions = [
+  const groupedOptions: { label: string; options: option[] }[] = [
     { label: "野菜", options: vegeOptions },
     { label: "果物", options: fruitsOptions },
     { label: "肉", options: meatOptions },
@@ -102,24 +74,28 @@ export const FoodSelect: React.FC<Props> = (props) => {
     { label: "その他", options: otherOptions },
   ];
 
-  useEffect(() => {
-    if (props.isModify) {
-      const allOptions = [
-        ...vegeOptions,
-        ...fruitsOptions,
-        ...meatOptions,
-        ...fishOptions,
-        ...otherOptions,
-      ];
-
-      const defaultFoodId = props.defaultDish!.usedFoodId;
-      const defaultOptions = allOptions.filter((option) =>
-        defaultFoodId.includes(option.value)
-      );
-
-      setDisplayOptions(defaultOptions);
-    }
-  }, [vegeOptions, fruitsOptions, meatOptions, fishOptions, otherOptions]);
+  useEffect(
+    () => {
+      if (props.isModify) {
+        const allOptions = [
+          ...vegeOptions,
+          ...fruitsOptions,
+          ...meatOptions,
+          ...fishOptions,
+          ...otherOptions,
+        ];
+        const defaultFoodId = props.defaultDish!.usedFoodId;
+        const defaultOptions = allOptions.filter((option) =>
+          defaultFoodId.includes(option.value)
+        );
+        setDisplayOptions(defaultOptions);
+      }
+      console.log("useEffect");
+    },
+    groupedOptions.map((groupedOption) => {
+      return groupedOption.options;
+    })
+  );
 
   const optionChange = (selectedOptions: readonly option[]) => {
     setDisplayOptions(selectedOptions);
