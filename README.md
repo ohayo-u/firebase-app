@@ -21,6 +21,7 @@
 
 ## 使用技術
 
+- typescript 4.9.5
 - react 18.2.0
 - react-router-dom 6.9.0
 - react-select 5.7.2
