@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import no_image from "../images/no_image.png";
 
 interface Props {
-  setImage: any;
+  setImage: (value: File) => void;
 }
 
 export const ImageUploader: React.FC<Props> = (props) => {
-  const [imgPreview, setImgPreview] = useState<any>(no_image);
+  const [imgPreview, setImgPreview] = useState<string | null>(no_image);
 
-  const onFileChange = (e: any) => {
-    const selectedImage = e.target.files[0];
+  const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const selectedImage = e.target.files![0];
     const reader = new FileReader();
 
     reader.onload = () => {
-      setImgPreview(reader.result);
+      setImgPreview(reader.result as string | null);
     };
 
     if (selectedImage) {
