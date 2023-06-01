@@ -64,11 +64,11 @@ export const Mypage: React.FC = () => {
     });
   }, []);
 
-  const modal = isModalOpen ? (
-    <RegisterModal setIsModalOpen={setIsModalOpen} user={user} />
-  ) : null;
+  const modal =
+    user && isModalOpen ? (
+      <RegisterModal setIsModalOpen={setIsModalOpen} user={user} />
+    ) : null;
 
-  console.log(dishList);
   return (
     <>
       {!loading && (
