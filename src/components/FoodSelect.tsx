@@ -2,21 +2,26 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { db } from "../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { DishType } from "../models/dish.model";
 
 interface Props {
-  displayOptions: any;
-  setDisplayOptions: any;
-  setFoodlist: any;
+  setFoodlist: (value: string[]) => void;
   isModify: boolean;
-  defaultDish: any;
+  defaultDish: DishType | undefined;
 }
 
+type option = {
+  value: string;
+  label: string;
+};
+
 export const FoodSelect: React.FC<Props> = (props) => {
-  const [vegeOptions, setVegeOptions] = useState<any>([]);
-  const [fruitsOptions, setFruitsOptions] = useState<any>([]);
-  const [meatOptions, setMeatOptions] = useState<any>([]);
-  const [fishOptions, setFishOptions] = useState<any>([]);
-  const [otherOptions, setOtherOptions] = useState<any>([]);
+  const [vegeOptions, setVegeOptions] = useState<option[]>([]);
+  const [fruitsOptions, setFruitsOptions] = useState<option[]>([]);
+  const [meatOptions, setMeatOptions] = useState<option[]>([]);
+  const [fishOptions, setFishOptions] = useState<option[]>([]);
+  const [otherOptions, setOtherOptions] = useState<option[]>([]);
+  const [displayOptions, setDisplayOptions] = useState<readonly option[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,19 +112,19 @@ export const FoodSelect: React.FC<Props> = (props) => {
         ...otherOptions,
       ];
 
-      const defaultFoodId = props.defaultDish.usedFoodId;
+      const defaultFoodId = props.defaultDish!.usedFoodId;
       const defaultOptions = allOptions.filter((option) =>
         defaultFoodId.includes(option.value)
       );
 
-      props.setDisplayOptions(defaultOptions);
+      setDisplayOptions(defaultOptions);
     }
   }, [vegeOptions, fruitsOptions, meatOptions, fishOptions, otherOptions]);
 
-  const optionChange = (selectedOptions: any) => {
-    props.setDisplayOptions(selectedOptions);
-    const selectedFood: any[] = [];
-    selectedOptions.forEach((selectedOption: any) => {
+  const optionChange = (selectedOptions: readonly option[]) => {
+    setDisplayOptions(selectedOptions);
+    const selectedFood: string[] = [];
+    selectedOptions.forEach((selectedOption: option) => {
       selectedFood.push(selectedOption.value);
     });
     props.setFoodlist(selectedFood);
@@ -137,7 +142,7 @@ export const FoodSelect: React.FC<Props> = (props) => {
       <Select
         options={groupedOptions}
         isMulti
-        value={props.displayOptions}
+        value={displayOptions}
         onChange={optionChange}
       />
     </div>
