@@ -4,19 +4,20 @@ import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 import { FoodSelect } from "./FoodSelect";
 import { ImageUploader } from "./ImageUploader";
+import { User } from "firebase/auth";
+import { CustomedSubmitEvent } from "../models/submitEvent.model";
 
 interface Props {
-  setIsModalOpen: any;
-  user: any;
+  setIsModalOpen: (value: React.SetStateAction<boolean>) => void;
+  user: User;
 }
 
 export const RegisterModal: React.FC<Props> = (props) => {
-  const [displayOptions, setDisplayOptions] = useState<any>([]);
-  const [image, setImage] = useState<any>();
-  const [foodlist, setFoodlist] = useState<any>([]);
-  const [dishName, setDishName] = useState<any>("");
+  const [image, setImage] = useState<File>();
+  const [foodlist, setFoodlist] = useState<string[]>([]);
+  const [dishName, setDishName] = useState<string>("");
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: CustomedSubmitEvent) => {
     e.preventDefault();
     const dishName = e.target.elements.dishName.value;
 
@@ -59,8 +60,6 @@ export const RegisterModal: React.FC<Props> = (props) => {
             value={dishName}
           ></input>
           <FoodSelect
-            displayOptions={displayOptions}
-            setDisplayOptions={setDisplayOptions}
             setFoodlist={setFoodlist}
             isModify={false}
             defaultDish={undefined}
