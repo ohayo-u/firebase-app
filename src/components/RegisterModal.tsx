@@ -4,6 +4,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 import { FoodSelect } from "./FoodSelect";
 import { ImageUploader } from "./ImageUploader";
+import { LoadingIcon } from "./LoadingIcon";
 import { User } from "firebase/auth";
 import { CustomedSubmitEvent } from "../models/submitEvent.model";
 
@@ -16,9 +17,11 @@ export const RegisterModal: React.FC<Props> = (props) => {
   const [image, setImage] = useState<File>();
   const [foodlist, setFoodlist] = useState<string[]>([]);
   const [dishName, setDishName] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e: CustomedSubmitEvent) => {
     e.preventDefault();
+    setLoading(true);
     const dishName = e.target.elements.dishName.value;
 
     const dishListCollectionRef = collection(
@@ -43,11 +46,13 @@ export const RegisterModal: React.FC<Props> = (props) => {
         usedFoodId: foodlist,
       });
     }
+    setLoading(false);
     props.setIsModalOpen(false);
   };
 
   return (
     <>
+      {loading ? <LoadingIcon /> : null}
       <div className="modal" onClick={() => props.setIsModalOpen(false)}></div>
       <div className="modal-inner form-modal">
         <form onSubmit={handleSubmit}>

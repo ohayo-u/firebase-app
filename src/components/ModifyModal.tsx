@@ -4,6 +4,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { deleteObject, ref, uploadBytes } from "firebase/storage";
 import { FoodSelect } from "./FoodSelect";
 import { ImageUploader } from "./ImageUploader";
+import { LoadingIcon } from "./LoadingIcon";
 import { User } from "firebase/auth";
 import { DishType } from "../models/dish.model";
 import { CustomedSubmitEvent } from "../models/submitEvent.model";
@@ -20,9 +21,12 @@ export const ModifyModal: React.FC<Props> = (props) => {
     props.defaultDish.usedFoodId
   );
   const [dishName, setDishName] = useState<string>(props.defaultDish.name);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e: CustomedSubmitEvent) => {
     e.preventDefault();
+    setLoading(true);
+
     const dishName = e.target.elements.dishName.value;
 
     const defaultDishDocRef = doc(
@@ -50,11 +54,13 @@ export const ModifyModal: React.FC<Props> = (props) => {
         usedFoodId: foodlist,
       });
     }
+    setLoading(false);
     props.setIsModifyModalOpen(false);
   };
 
   return (
     <>
+      {loading ? <LoadingIcon /> : null}
       <div
         className="modal"
         onClick={() => props.setIsModifyModalOpen(false)}
