@@ -25,7 +25,11 @@ export const Login: React.FC = () => {
             <Mypage />
           ) : (
             <div style={{ textAlign: "center" }}>
-              <img src={logo2400} style={{ width: "1200px" }} />
+              <img
+                src={logo2400}
+                style={{ width: "1200px" }}
+                data-testid="login-image"
+              />
               <div>
                 <GoogleSignIn />
                 <AnonymousSignIn />
