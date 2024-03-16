@@ -1,6 +1,6 @@
 # MOG
 
-[MOG](https://m0g.app/)は食材と仲良くなれるアプリです。<br>
+[MOG](https://fir-app-57788.web.app/)は食材と仲良くなれるアプリです。<br>
 料理と、その料理に使った食材を登録することで、食材との仲良し度を上げることができます。
 
 ![料理登録の画面](https://user-images.githubusercontent.com/124668307/235273375-f5a58cd5-09b7-4227-95e5-11d7fe5ceba4.png)
